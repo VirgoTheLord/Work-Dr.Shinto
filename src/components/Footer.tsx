@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { FiArrowUp } from "react-icons/fi";
+import { FiArrowUp, FiArrowRight } from "react-icons/fi";
 
 const Footer: React.FC = () => {
   const scrollToTop = () => {
@@ -10,96 +10,87 @@ const Footer: React.FC = () => {
 
   const PillHeading: React.FC<{ title: string }> = ({ title }) => (
     <div className="mb-4">
-      <span className="inline-block border border-white/40 rounded-full px-3 py-1 text-xs font-medium text-white/60">
+      <span className="inline-block border-2 border-white/40 rounded-full px-3 py-1 text-xs font-medium text-white/60 hover:text-black hover:bg-white/90 transition-all duration-300 ease-in-out">
         {title}
       </span>
     </div>
   );
 
+  const AnimatedLink: React.FC<{ href: string; children: React.ReactNode }> = ({
+    href,
+    children,
+  }) => (
+    <a
+      href={href}
+      className="group flex items-center relative text-white/60 hover:text-white transition-colors duration-300"
+    >
+      <span className="absolute left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -rotate-45">
+        <FiArrowRight />
+      </span>
+      <span className="pl-0 group-hover:pl-4 transition-all duration-300">
+        {children}
+      </span>
+    </a>
+  );
+
   return (
-    <footer className="bg-neutral-900 text-white font-sans relative py-8">
-      <div className="max-w-full pl-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-30 gap-y-12">
+    <footer className="bg-neutral-900 text-white font-sans relative pt-16 pb-28 lg:py-8 overflow-x-hidden">
+      <div className="max-w-full px-6 md:px-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-8 gap-y-12">
           <div className="lg:col-start-1 lg:col-span-7">
-            <h1 className="text-[8rem] md:text-[10rem] lg:text-[10rem] font-braven font-bold leading-none">
-              Dr. Shinto
+            <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-[9rem] font-medium font-braven leading-none">
+              Dr. Shinto.
             </h1>
-            <p className="mt-20 text-lg text-white max-w-md">
-              Agentur für sinnbasierte Grafik und Kommunikation
+            <p className="mt-10 text-md text-white/80 max-w-md">
+              Agency for purpose-driven design and communication.
             </p>
           </div>
 
           <div className="lg:col-start-8 lg:col-span-2">
-            <PillHeading title="Kontakt" />
-            <address className="not-italic text-white leading-relaxed">
-              Clou Werbeagentur
+            <PillHeading title="Contact" />
+            <address className="not-italic text-white/90 text-md pb-5">
+              Dr. Shinto Rajappan
               <br />
-              Mythenstrasse 7
+              Kerala,
               <br />
-              CH-6003 Luzern
+              India
             </address>
-            <a
-              href="tel:+41412405662"
-              className="block mt-4 hover:text-gray-300 transition-colors"
-            >
-              +41 41 240 56 62
-            </a>
-            <a
-              href="mailto:hallo@clou.ch"
-              className="block hover:text-gray-300 transition-colors"
-            >
-              hallo@clou.ch
-            </a>
+            <AnimatedLink href="#">7073468097467</AnimatedLink>
+            <AnimatedLink href="#">jisdf.shinto.com</AnimatedLink>
           </div>
 
           <div className="lg:col-start-10 lg:col-span-3">
             <PillHeading title="Links" />
-            <ul className="space-y-2">
+            <ul className="space-y-2 text-sm">
               <li>
-                <a href="#" className="hover:text-gray-300 transition-colors">
-                  Instagram
-                </a>
+                <AnimatedLink href="#">Instagram</AnimatedLink>
               </li>
               <li>
-                <a href="#" className="hover:text-gray-300 transition-colors">
-                  LinkedIn
-                </a>
+                <AnimatedLink href="#">LinkedIn</AnimatedLink>
               </li>
               <li>
-                <a href="#" className="hover:text-gray-300 transition-colors">
-                  Newsletter
-                </a>
+                <AnimatedLink href="#">Twitter</AnimatedLink>
               </li>
               <li>
-                <a href="#" className="hover:text-gray-300 transition-colors">
-                  Webflow
-                </a>
+                <AnimatedLink href="#">GitHub</AnimatedLink>
               </li>
             </ul>
-            <ul className="space-y-2 mt-4 text-white/50">
+            <ul className="space-y-2 mt-4 text-sm md:mb-10">
               <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Impressum
-                </a>
+                <AnimatedLink href="#">Legal</AnimatedLink>
               </li>
               <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Datenschutz
-                </a>
+                <AnimatedLink href="#">Privacy</AnimatedLink>
               </li>
               <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  AGBs
-                </a>
+                <AnimatedLink href="#">Terms</AnimatedLink>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0 pb-5">
-          <div className="mx-auto flex justify-between items-center pr-4">
-            <div></div>
-
+        <div className="absolute bottom-8 left-0 right-0">
+          <div className="max-w-full mx-auto flex justify-end items-center px-6 md:px-10">
             <button
               onClick={scrollToTop}
               className="group h-12 w-12 flex items-center justify-center bg-transparent hover:bg-white border border-gray-700 hover:border-white rounded-full transition-all duration-300 ease-in-out"

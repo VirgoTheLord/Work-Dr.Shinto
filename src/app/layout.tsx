@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { ReactLenis } from "lenis/react";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -22,9 +23,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${braven.variable} antialiased`}>
-        <Navbar />
-        {children}
-        <Footer />
+        <ReactLenis root>
+          <Navbar />
+          {children}
+          <Footer />
+        </ReactLenis>
       </body>
     </html>
   );
