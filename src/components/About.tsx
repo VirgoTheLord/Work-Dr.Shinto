@@ -1,51 +1,64 @@
-import React from "react";
+"use client";
 
-const About = () => {
+import React, { forwardRef } from "react";
+import Image from "next/image";
+
+type AboutProps = React.ComponentPropsWithoutRef<"div">;
+
+const About = forwardRef<HTMLDivElement, AboutProps>((props, ref) => {
   return (
-    <div className="min-h-screen w-full flex flex-col justify-center items-center bg-black/95 text-white py-20 px-6 md:px-10 overflow-x-hidden">
-      <div className="max-w-4xl w-full">
-        {/* Main Section Header */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold font-braven">
-            About Dr. Shinto Rajappan
-          </h1>
-          <p className="mt-4 text-lg text-white/70 max-w-2xl mx-auto">
-            Brief background and clinical interests.
-          </p>
-        </div>
-
-        {/* Content Grid */}
-        <div className="grid gap-12 md:grid-cols-5">
-          {/* Left Column: Main Text */}
-          <div className="md:col-span-3">
-            <p className="text-white/70 leading-relaxed">
-              Dr. Shinto Rajappan is a board-certified Radiologist practicing at
-              Ernakulam Medical Center, with interests in oncologic imaging, CT,
-              MRI, and image-guided procedures. He focuses on clear
-              communication and evidence-based care.
-            </p>
-            <ul className="list-disc ml-5 mt-6 space-y-2 text-white/70">
-              <li>Oncologic imaging and staging</li>
-              <li>Breast, abdominal, and thoracic imaging</li>
-              <li>Ultrasound and CT-guided interventions</li>
-            </ul>
+    <div
+      ref={ref}
+      className="min-h-screen w-full flex flex-col justify-center items-center bg-gray-100  text-neutral-800 py-16 sm:py-20 px-6 md:px-10 overflow-hidden"
+    >
+      <div className="max-w-5xl w-full">
+        <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
+          <div className="w-full md:w-2/5 flex-shrink-0">
+            {/* This container holds the image and its shadow */}
+            <div className="relative">
+              <div className="absolute -bottom-4 -right-4 w-full h-full bg-orange-950 rounded-lg transform translate-x-2 translate-y-2"></div>
+              <div className="relative aspect-square md:aspect-[4/5] rounded-lg overflow-hidden shadow-lg z-10">
+                <Image
+                  src="/1.jpg"
+                  alt="Dr. Shinto Rajappan"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </div>
           </div>
 
-          {/* Right Column: Credentials Card */}
-          <div className="md:col-span-2 bg-neutral-900/80 p-6 rounded-lg border border-white/10">
-            <h4 className="font-semibold text-lg text-white/90 mb-4">
-              Credentials
-            </h4>
-            <ul className="list-disc ml-5 space-y-2 text-white/60">
-              <li>MBBS, MD (Radiodiagnosis)</li>
-              <li>Fellowship in Oncologic Imaging</li>
-              <li>Member, IRIA</li>
-            </ul>
+          {/* ✅ FIX: Added `relative` and `z-10` here to lift the text above the image's shadow box */}
+          <div className="relative z-10 w-full md:w-3/5">
+            <p className="text-orange-900 text-sm font-semibold mb-2 font-raleway">
+              Meet Dr. Shinto Rajappan
+            </p>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold font-braven text-neutral-900 mb-6">
+              A Leader in Orthopedic & Joint Replacement Surgery
+            </h1>
+            <p className="text-neutral-600 leading-relaxed mb-6 font-raleway">
+              Dr. Shinto Rajappan is a renowned{" "}
+              <strong>orthopedic surgeon</strong> specializing in advanced{" "}
+              <strong>joint replacement</strong> and{" "}
+              <strong>arthroscopic surgery</strong>. With extensive training,
+              including D'Ortho, DNB, and an Mch in Orthopedics, he brings a
+              wealth of knowledge to his practice.
+            </p>
+            <p className="text-neutral-600 leading-relaxed font-raleway">
+              His approach combines cutting-edge surgical techniques with a deep
+              commitment to <strong>patient-centered care</strong>. Dr. Rajappan
+              is dedicated to helping patients regain mobility and improve their
+              quality of life through personalized treatment plans and
+              compassionate communication.
+            </p>
+            <div className="w-16 h-1 bg-orange-950 mt-8"></div>
           </div>
         </div>
       </div>
     </div>
   );
-};
+});
+
+About.displayName = "About";
 
 export default About;
