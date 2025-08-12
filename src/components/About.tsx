@@ -14,7 +14,6 @@ const About = forwardRef<HTMLDivElement, AboutProps>((props, ref) => {
       <div className="max-w-5xl w-full">
         <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
           <div className="w-full md:w-2/5 flex-shrink-0">
-            {/* This container holds the image and its shadow */}
             <div className="relative">
               <div className="absolute -bottom-4 -right-4 w-full h-full bg-orange-950 rounded-lg transform translate-x-2 translate-y-2"></div>
               <div className="relative aspect-square md:aspect-[4/5] rounded-lg overflow-hidden shadow-lg z-10">
@@ -28,7 +27,6 @@ const About = forwardRef<HTMLDivElement, AboutProps>((props, ref) => {
             </div>
           </div>
 
-          {/* ✅ FIX: Added `relative` and `z-10` here to lift the text above the image's shadow box */}
           <div className="relative z-10 w-full md:w-3/5">
             <p className="text-orange-900 text-sm font-semibold mb-2 font-raleway">
               Meet Dr. Shinto Rajappan
