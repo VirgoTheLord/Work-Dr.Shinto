@@ -3,7 +3,7 @@ import ParallaxImage from "./ParallaxImage";
 
 interface ParallaxSectionProps {
   children: ReactNode;
-  imgSrc: string;
+  imgSrc?: string;
   imgAlt: string;
   imgSpeed?: number;
   className?: string;

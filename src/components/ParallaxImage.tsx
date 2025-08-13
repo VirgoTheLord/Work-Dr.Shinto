@@ -8,17 +8,21 @@ const lerp = (start: number, end: number, factor: number) =>
   start + (end - start) * factor;
 
 interface ParallaxImageProps {
-  src: string;
+  src?: string; // Made optional
   alt: string;
   speed?: number;
+  bgColor?: string; // New prop for background color
 }
 
 const ParallaxImage: React.FC<ParallaxImageProps> = ({
   src,
   alt,
   speed = 0.2,
+  bgColor = "transparent", // Default color if none is provided
 }) => {
+  // Separate refs for Image and Div
   const imageRef = useRef<HTMLImageElement | null>(null);
+  const divRef = useRef<HTMLDivElement | null>(null);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const bounds = useRef<{ top: number; bottom: number } | null>(null);
   const currentTranslateY = useRef(0);
@@ -38,9 +42,9 @@ const ParallaxImage: React.FC<ParallaxImageProps> = ({
 
     updateBounds();
     window.addEventListener("resize", updateBounds);
-
     const animate = () => {
-      if (imageRef.current) {
+      const el = src ? imageRef.current : divRef.current;
+      if (el) {
         currentTranslateY.current = lerp(
           currentTranslateY.current,
           targetTranslateY.current,
@@ -49,7 +53,7 @@ const ParallaxImage: React.FC<ParallaxImageProps> = ({
         if (
           Math.abs(currentTranslateY.current - targetTranslateY.current) > 0.01
         ) {
-          imageRef.current.style.transform = `translateY(${currentTranslateY.current}px) scale(1.2)`;
+          el.style.transform = `translateY(${currentTranslateY.current}px) scale(1.2)`;
         }
       }
       refId.current = requestAnimationFrame(animate);
@@ -61,7 +65,7 @@ const ParallaxImage: React.FC<ParallaxImageProps> = ({
       window.removeEventListener("resize", updateBounds);
       if (refId.current) cancelAnimationFrame(refId.current);
     };
-  }, []);
+  }, [src]);
 
   useLenis(({ scroll }) => {
     if (!bounds.current) return;
@@ -70,15 +74,31 @@ const ParallaxImage: React.FC<ParallaxImageProps> = ({
   });
 
   return (
-    <div ref={wrapperRef} className="absolute inset-0 overflow-hidden">
-      <Image
-        ref={imageRef}
-        src={src}
-        alt={alt}
-        fill
-        className="object-cover will-change-transform"
-        style={{ transform: "translateY(0) scale(1.2)" }}
-      />
+    <div ref={wrapperRef} className="relative w-full h-full overflow-hidden">
+      {src ? (
+        // If 'src' exists, render the Image
+        <Image
+          ref={imageRef}
+          src={src}
+          alt={alt}
+          fill
+          className="object-cover will-change-transform"
+          style={{ transform: "translateY(0) scale(1.2)" }}
+        />
+      ) : (
+        // Otherwise, render a colored Div
+        <div
+          ref={divRef}
+          className="w-full h-full will-change-transform"
+          style={{
+            backgroundColor: bgColor,
+            transform: "translateY(0) scale(1.2)",
+          }}
+          // The 'alt' prop is used for an ARIA label for accessibility
+          role="img"
+          aria-label={alt}
+        />
+      )}
     </div>
   );
 };
