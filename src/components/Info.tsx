@@ -31,7 +31,7 @@ const cardData = [
 ];
 
 const Info = () => {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -45,8 +45,8 @@ const Info = () => {
 
       gsap.killTweensOf([title, content, arrow]);
 
-      if (hoveredIndex !== null) {
-        if (index === hoveredIndex) {
+      if (activeIndex !== null) {
+        if (index === activeIndex) {
           gsap.to(title, { opacity: 1, duration: 0.4, delay: 0.2 });
           gsap.to(content, { opacity: 1, y: 0, duration: 0.4, delay: 0.2 });
           gsap.to(arrow, { autoAlpha: 0, x: 10, duration: 0.3 });
@@ -61,11 +61,15 @@ const Info = () => {
         gsap.to(arrow, { autoAlpha: 1, x: 0, duration: 0.4, delay: 0.1 });
       }
     });
-  }, [hoveredIndex]);
+  }, [activeIndex]);
 
   const getCardState = (index: number) => {
-    if (hoveredIndex === null) return "default";
-    return hoveredIndex === index ? "expanded" : "collapsed";
+    if (activeIndex === null) return "default";
+    return activeIndex === index ? "expanded" : "collapsed";
+  };
+
+  const handleCardClick = (index: number) => {
+    setActiveIndex(index === activeIndex ? null : index);
   };
 
   return (
@@ -86,21 +90,31 @@ const Info = () => {
           </p>
         </div>
 
-        <div className="relative z-10 w-full h-screen overflow-hidden">
+        {/* This container now has a dynamic height on mobile */}
+        <div className="relative z-10 w-full lg:h-screen overflow-hidden">
           <div
             ref={containerRef}
-            className="flex w-full h-full"
-            onMouseLeave={() => setHoveredIndex(null)}
+            // Mobile: flex-col, Desktop: flex-row
+            className="flex flex-col lg:flex-row w-full h-full"
+            // Reset state on a larger screen if the mouse leaves the container
+            onMouseLeave={() => setActiveIndex(null)}
           >
             {cardData.map((card, index) => (
               <div
                 key={card.title}
-                onMouseEnter={() => setHoveredIndex(index)}
-                className="card relative flex flex-col text-left bg-white bg-opacity-80 backdrop-blur-sm p-10 cursor-pointer border-r border-gray-200 last:border-r-0 h-full
-                           transition-[flex] duration-700 ease-in-out
-                           data-[state=default]:flex-[1_1_0%]
-                           data-[state=expanded]:flex-[3.5_1_0%]
-                           data-[state=collapsed]:flex-[0.6_1_0%]"
+                onClick={() => handleCardClick(index)}
+                className="card relative flex flex-col text-left bg-white bg-opacity-80 backdrop-blur-sm p-10 cursor-pointer
+                           border-b last:border-b-0 lg:border-b-0 lg:border-r lg:last:border-r-0 border-gray-200
+                           transition-[flex] duration-700 ease-in-out h-full
+                           // Mobile: default flex is 0.25 to make them smaller
+                           flex-[0.25_1_0%]
+                           // Responsive: On large screens, use the horizontal flex values
+                           lg:data-[state=default]:flex-[1_1_0%]
+                           lg:data-[state=expanded]:flex-[3.5_1_0%]
+                           lg:data-[state=collapsed]:flex-[0.6_1_0%]
+                           // Mobile: On click, expand vertically
+                           data-[state=expanded]:flex-[2_1_0%]
+                           data-[state=collapsed]:flex-[0.25_1_0%]"
                 data-state={getCardState(index)}
               >
                 <div>

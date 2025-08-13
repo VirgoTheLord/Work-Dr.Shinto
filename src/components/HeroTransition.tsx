@@ -47,7 +47,7 @@ const HeroAboutTransition = () => {
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-[115vh] overflow-hidden"
+      className="relative w-full h-[125vh] overflow-hidden"
     >
       <div ref={heroRef} className="w-full h-full">
         <Hero />
