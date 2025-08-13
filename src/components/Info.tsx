@@ -3,7 +3,7 @@
 import React, { useState, useRef, useLayoutEffect } from "react";
 import { gsap } from "gsap";
 import { FaArrowRight } from "react-icons/fa";
-import ParallaxSection from "./ParallaxSection"; // Your Parallax HOC
+import ParallaxSection from "./ParallaxSection";
 
 const cardData = [
   {
@@ -36,11 +36,16 @@ const Info = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const isDesktop = useRef(false);
-  // Ref to hold the timeout for the leave animation delay
   const leaveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const timelines = useRef<gsap.core.Timeline[]>([]);
 
   useLayoutEffect(() => {
     isDesktop.current = window.matchMedia("(min-width: 1024px)").matches;
+
+    cardData.forEach((card) => {
+      const img = new Image();
+      img.src = card.image;
+    });
   }, []);
 
   useLayoutEffect(() => {
@@ -48,7 +53,9 @@ const Info = () => {
     const cards = Array.from(containerRef.current.children) as HTMLDivElement[];
 
     const ctx = gsap.context(() => {
-      cards.forEach((card, index) => {
+      timelines.current = [];
+
+      cards.forEach((card) => {
         const title = card.querySelector(".card-title");
         const content = card.querySelector(".card-content");
         const arrowIcon = card.querySelector(".card-arrow-icon");
@@ -83,32 +90,25 @@ const Info = () => {
             "<"
           );
 
-        (card as any).timeline = tl;
-
-        if (activeIndex !== null) {
-          if (index === activeIndex) {
-            (card as any).timeline.play();
-          } else {
-            if (isDesktop.current) {
-              gsap.to(card, { opacity: 0.5, duration: 0.4 });
-            }
-            gsap.to(title, { opacity: 0, duration: 0.3 });
-            gsap.to(content, { opacity: 0, y: 15, duration: 0.3 });
-          }
-        } else {
-          (card as any).timeline.reverse();
-          gsap.to(card, { opacity: 1, duration: 0.4 });
-          gsap.to(title, { opacity: 1, duration: 0.4, delay: 0.1 });
-        }
+        timelines.current.push(tl);
       });
     }, containerRef);
 
     return () => ctx.revert();
+  }, []);
+
+  useLayoutEffect(() => {
+    timelines.current.forEach((tl, index) => {
+      if (index === activeIndex) {
+        tl.play();
+      } else {
+        tl.reverse();
+      }
+    });
   }, [activeIndex]);
 
   const handleMouseEnter = (index: number) => {
     if (isDesktop.current) {
-      // Clear any pending leave timeout
       if (leaveTimeoutRef.current) {
         clearTimeout(leaveTimeoutRef.current);
       }
@@ -118,10 +118,9 @@ const Info = () => {
 
   const handleMouseLeave = () => {
     if (isDesktop.current) {
-      // Set a delay before resetting the active index
       leaveTimeoutRef.current = setTimeout(() => {
         setActiveIndex(null);
-      }, 100); // 100ms delay
+      }, 100);
     }
   };
 
@@ -138,7 +137,7 @@ const Info = () => {
       id="info-section"
     >
       <div className="flex flex-col min-h-screen">
-        <div className="bg-gray-200">
+        <div className="bg-[#eddbc7]">
           <div className="container mx-auto px-6 text-center py-24">
             <h1 className="text-4xl md:text-6xl font-bold font-braven text-black">
               The Role of Radiology in Cancer Care
@@ -165,14 +164,7 @@ const Info = () => {
                   card group relative flex flex-col text-left bg-white p-10 cursor-pointer
                   border-b last:border-b-0 lg:border-b-0 lg:border-r lg:last:border-r-0 border-gray-200
                   transition-[flex] duration-700 ease-in-out overflow-hidden
-                  
-                  ${
-                    activeIndex === null
-                      ? "flex-[1_1_0%]"
-                      : activeIndex === index
-                      ? "flex-[4_1_0%]"
-                      : "flex-[0.5_1_0%]"
-                  }
+                  ${activeIndex === index ? "flex-[4_1_0%]" : "flex-[1_1_0%]"}
                   lg:flex-1
                 `}
               >
@@ -180,7 +172,10 @@ const Info = () => {
                   src={card.image}
                   alt={card.title}
                   className="card-image absolute inset-0 w-full h-full object-cover"
-                  style={{ clipPath: "circle(0% at 100% 100%)" }}
+                  style={{
+                    willChange: "clip-path",
+                    clipPath: "circle(0% at 100% 100%)",
+                  }}
                 />
                 <div className="card-overlay absolute inset-0 bg-black opacity-0 pointer-events-none"></div>
 
