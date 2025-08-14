@@ -40,7 +40,6 @@ export default function RootLayout({
         <ReactLenis root>
           <Navbar />
           {children}
-          <Footer />
         </ReactLenis>
       </body>
     </html>
