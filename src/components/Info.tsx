@@ -137,7 +137,7 @@ const Info = () => {
       id="info-section"
     >
       <div className="flex flex-col min-h-screen">
-        <div className="bg-[#eddbc7]">
+        <div className="bg-[#e0c7ae]">
           <div className="container mx-auto px-6 text-center py-24">
             <h1 className="text-4xl md:text-6xl font-bold font-braven text-black">
               The Role of Radiology in Cancer Care
