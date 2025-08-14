@@ -22,39 +22,42 @@ const VideosSection: FC = () => {
     const section = sectionRef.current;
     if (!section) return;
 
+    // --- Core Animation Logic (runs on all devices) ---
+    const ctx = gsap.context(() => {
+      const cards = gsap.utils.toArray<HTMLElement>(".video-card");
+      gsap.set(cards[0], { yPercent: 30, scale: 0.8, borderRadius: "20vh" });
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          pin: true,
+          scrub: 1,
+          end: () => "+=" + section.offsetHeight * (cards.length - 1),
+        },
+        defaults: { ease: "power1.inOut", duration: 1 },
+      });
+
+      tl.to(cards[0], {
+        yPercent: 0,
+        scale: 1,
+        borderRadius: "0vh",
+        duration: 0.5,
+      });
+
+      cards.forEach((card, index) => {
+        if (index > 0) {
+          tl.fromTo(
+            card,
+            { yPercent: 100, scale: 0.8, borderRadius: "20vh" },
+            { yPercent: 0, scale: 1, borderRadius: "0vh" }
+          ).to(cards[index - 1], { scale: 0.95, opacity: 0.6 }, "<");
+        }
+      });
+    }, section);
+
+    // --- Cursor Logic (runs on desktop/pointer devices ONLY) ---
     const mm = gsap.matchMedia();
     mm.add("(pointer: fine)", () => {
-      const ctx = gsap.context(() => {
-        // ... Scroll animation logic remains the same
-        const cards = gsap.utils.toArray<HTMLElement>(".video-card");
-        gsap.set(cards[0], { yPercent: 30, scale: 0.8, borderRadius: "20vh" });
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: section,
-            pin: true,
-            scrub: 1,
-            end: () => "+=" + section.offsetHeight * (cards.length - 1),
-          },
-          defaults: { ease: "power1.inOut", duration: 1 },
-        });
-        tl.to(cards[0], {
-          yPercent: 0,
-          scale: 1,
-          borderRadius: "0vh",
-          duration: 0.5,
-        });
-        cards.forEach((card, index) => {
-          if (index > 0) {
-            tl.fromTo(
-              card,
-              { yPercent: 100, scale: 0.8, borderRadius: "20vh" },
-              { yPercent: 0, scale: 1, borderRadius: "0vh" }
-            ).to(cards[index - 1], { scale: 0.95, opacity: 0.6 }, "<");
-          }
-        });
-      }, section);
-
-      // --- FINAL 'EXPAND FROM CENTER' CURSOR LOGIC ---
       const moveCursor = (e: MouseEvent) =>
         gsap.to(cursorRef.current, {
           x: e.clientX,
@@ -79,9 +82,8 @@ const VideosSection: FC = () => {
         };
 
         if (isOverVideo) {
-          // State 1: Morph to Cuboid, expand icon/text from center
           gsap.to(cursorRef.current, {
-            width: "150px",
+            width: "160px",
             height: "56px",
             borderRadius: "16px",
             ...autoOverwrite,
@@ -97,7 +99,6 @@ const VideosSection: FC = () => {
             ...autoOverwrite,
           });
         } else if (isOverCard) {
-          // State 2: Revert to Circle, move icon/text back to center
           gsap.to(cursorRef.current, {
             width: "56px",
             height: "56px",
@@ -115,7 +116,6 @@ const VideosSection: FC = () => {
             ...autoOverwrite,
           });
         } else {
-          // State 3: Shrink to Dot
           gsap.to(cursorRef.current, {
             width: "24px",
             height: "24px",
@@ -152,8 +152,8 @@ const VideosSection: FC = () => {
       section.addEventListener("mouseleave", onLeaveSection);
       section.addEventListener("mousemove", onHover);
 
+      // Return a cleanup function for the listeners
       return () => {
-        ctx.revert();
         section.removeEventListener("mousemove", moveCursor);
         section.removeEventListener("mouseenter", onEnterSection);
         section.removeEventListener("mouseleave", onLeaveSection);
@@ -161,7 +161,11 @@ const VideosSection: FC = () => {
       };
     });
 
-    return () => mm.revert();
+    // Main cleanup function
+    return () => {
+      ctx.revert();
+      mm.revert();
+    };
   }, []);
 
   useLayoutEffect(() => {
@@ -185,6 +189,7 @@ const VideosSection: FC = () => {
           </div>
         ))}
       </div>
+      <div className="h-6 bg-[#401d01]" />
 
       <CustomCursor
         cursorRef={cursorRef}

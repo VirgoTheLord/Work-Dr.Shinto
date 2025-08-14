@@ -1,19 +1,22 @@
-// --- Type Definition ---
+// --- Type Definition (with specific description color) ---
 export interface Video {
   id: string;
   title: string;
   description: string;
   bgColor: string;
+  textColor: string;
+  descriptionColor: string;
 }
 
-// --- Data (New White & Light Brown Palette) ---
 export const videos: Video[] = [
   {
-    id: "Jk7wD_gb_Xg",
+    id: "dQw4w9WgXcQ",
     title: "Understanding MRI: A Patient's Guide",
     description:
       "A comprehensive look into the MRI procedure, helping you prepare for your scan with confidence.",
     bgColor: "bg-[#e0c7ae]",
+    textColor: "text-[#401d01]",
+    descriptionColor: "text-stone-600",
   },
   {
     id: "eFjJ39a4n4Q",
@@ -21,6 +24,8 @@ export const videos: Video[] = [
     description:
       "This guide demystifies the CT scan process, from arrival to completion, ensuring you know what to expect.",
     bgColor: "bg-[#401d01]",
+    textColor: "text-white",
+    descriptionColor: "text-stone-300",
   },
   {
     id: "pGncmT3P0uI",
@@ -28,6 +33,8 @@ export const videos: Video[] = [
     description:
       "Explore how advanced PET-CT imaging plays a crucial role in accurately staging and managing cancer.",
     bgColor: "bg-[#e0c7ae]",
+    textColor: "text-[#401d01]",
+    descriptionColor: "text-stone-600",
   },
   {
     id: "BeygJK_92Ak",
@@ -35,5 +42,7 @@ export const videos: Video[] = [
     description:
       "Learn the basics of ultrasound technology and its safe, non-invasive applications in medical diagnostics.",
     bgColor: "bg-[#401d01]",
+    textColor: "text-white",
+    descriptionColor: "text-stone-300",
   },
 ];
