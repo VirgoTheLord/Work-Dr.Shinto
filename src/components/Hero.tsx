@@ -66,6 +66,10 @@ const Hero = forwardRef<HTMLDivElement, React.PropsWithChildren<{}>>(
         gsap.registerPlugin(SplitText);
         const split1 = SplitText.create(nameRef1.current, { type: "chars" });
         const split2 = SplitText.create(nameRef2.current, { type: "chars" });
+
+        // Set the parent spans to clip the falling letters
+        gsap.set([nameRef1.current, nameRef2.current], { overflow: "hidden" });
+
         const tl = gsap.timeline();
 
         tl.from(subtitleRef.current, {
@@ -78,24 +82,26 @@ const Hero = forwardRef<HTMLDivElement, React.PropsWithChildren<{}>>(
           .from(
             split1.chars,
             {
+              // Animate from 100% of their height above
               yPercent: -100,
               autoAlpha: 0,
-              stagger: 0.03,
-              duration: 0.8,
-              ease: "power3.out",
+              stagger: 0.05, // A slightly slower stagger feels more like dropping
+              duration: 0.6,
+              ease: "power2.out",
             },
             "-=0.5"
           )
           .from(
             split2.chars,
             {
+              // Same animation for the second part of the name
               yPercent: -100,
               autoAlpha: 0,
-              stagger: 0.03,
-              duration: 0.8,
-              ease: "power3.out",
+              stagger: 0.05,
+              duration: 0.6,
+              ease: "power2.out",
             },
-            "-=0.6"
+            "-=0.5" // Overlap timelines for a smoother sequence
           )
           .from(
             [detailsRef.current, buttonsRef.current],
@@ -167,4 +173,5 @@ const Hero = forwardRef<HTMLDivElement, React.PropsWithChildren<{}>>(
   }
 );
 
+Hero.displayName = "Hero";
 export default Hero;

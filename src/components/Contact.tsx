@@ -1,54 +1,234 @@
-import React from "react";
-import { FiMail, FiPhone } from "react-icons/fi";
+"use client";
 
-const Contact = () => {
+import React, { useLayoutEffect, useRef, FC, ReactNode } from "react";
+import {
+  FiInstagram,
+  FiTwitter,
+  FiLinkedin,
+  FiArrowRight,
+} from "react-icons/fi";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SplitText } from "gsap/all";
+
+gsap.registerPlugin(ScrollTrigger, SplitText);
+
+const Contact: FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      if (titleRef.current) {
+        const split = SplitText.create(titleRef.current, { type: "chars" });
+        gsap.set(titleRef.current, { overflow: "hidden" });
+        gsap.from(split.chars, {
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 70%",
+            toggleActions: "play none none reverse",
+          },
+          yPercent: -100,
+          opacity: 0,
+          stagger: 0.05,
+          duration: 0.8,
+          ease: "power3.out",
+        });
+      }
+
+      gsap.from(".contact-block:not(:first-child)", {
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 70%",
+          toggleActions: "play none none reverse",
+        },
+        x: -50,
+        opacity: 0,
+        stagger: 0.2,
+        duration: 0.8,
+        ease: "power3.out",
+      });
+
+      gsap.from(".map-container", {
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 70%",
+          toggleActions: "play none none reverse",
+        },
+        x: 50,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power3.out",
+      });
+    }, containerRef);
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <div className="min-h-screen w-full flex flex-col justify-center items-center bg-black/95 text-white py-20 px-6 md:px-10 overflow-x-hidden">
-      <div className="max-w-4xl w-full">
-        {/* Main Section Header */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold font-braven">
+    <div
+      ref={containerRef}
+      id="contact"
+      className="min-h-screen w-full bg-[#F8F5F2] text-[#401d01] flex flex-col lg:flex-row"
+    >
+      <div className="w-full lg:w-1/2 flex flex-col justify-center p-8 md:p-16 lg:p-24 order-2 lg:order-1">
+        <div className="contact-block">
+          <p className="text-sm uppercase tracking-widest text-[#401d01]/60 font-raleway">
             Contact
+          </p>
+          <h1
+            ref={titleRef}
+            className="text-6xl md:text-8xl font-black font-braven leading-tight mt-2 whitespace-nowrap"
+          >
+            Dr. Shinto
           </h1>
-          <p className="mt-4 text-lg text-white/70 max-w-2xl mx-auto">
-            For appointments and clinical queries.
+        </div>
+        <div className="contact-block my-12 border-t border-b border-[#401d01]/20 py-8">
+          <h3 className="text-lg font-bold font-raleway tracking-wide">
+            Location & Hours
+          </h3>
+          <p className="font-raleway text-lg text-[#401d01]/70 mt-2">
+            Ernakulam Medical Center, Kochi, Kerala
+            <br />
+            Mon - Fri, 9:00 AM - 5:00 PM
           </p>
         </div>
-
-        {/* Content Grid */}
-        <div className="grid gap-12 md:grid-cols-2">
-          {/* Left Column: Contact Info */}
-          <div className="flex flex-col gap-4">
-            <a
-              href="mailto:hello@drshinto.com"
-              className="group flex-1 flex items-center justify-center gap-3 rounded-lg border border-white/20 bg-neutral-900/80 p-4 text-lg text-white/80 transition-colors hover:border-white/40 hover:text-white"
-            >
-              <FiMail className="h-5 w-5 transition-transform group-hover:-translate-y-0.5" />
-              Email
-            </a>
-            <a
-              href="tel:+910000000000"
-              className="group flex-1 flex items-center justify-center gap-3 rounded-lg border border-white/20 bg-neutral-900/80 p-4 text-lg text-white/80 transition-colors hover:border-white/40 hover:text-white"
-            >
-              <FiPhone className="h-5 w-5 transition-transform group-hover:-translate-y-0.5" />
-              Call
-            </a>
-            <address className="not-italic text-white/70 text-center mt-8">
-              Ernakulam Medical Center
-              <br />
-              Kochi, Kerala
-              <br />
-              India
-            </address>
-          </div>
-
-          {/* Right Column: Placeholder for Map */}
-          <div className="w-full min-h-[300px] md:min-h-full flex items-center justify-center rounded-lg bg-neutral-900/80 border border-dashed border-white/20">
-            <p className="text-white/40">Map will be integrated here</p>
+        <div className="contact-block">
+          <h3 className="text-lg font-bold font-raleway tracking-wide">
+            Get In Touch
+          </h3>
+          <div className="mt-2 flex flex-col items-start">
+            <AnimatedContactLink href="mailto:hello@drshinto.com">
+              hello@drshinto.com
+            </AnimatedContactLink>
+            <AnimatedContactLink href="tel:+910000000000">
+              +91 000 000 0000
+            </AnimatedContactLink>
           </div>
         </div>
+        <div className="contact-block mt-12 flex items-center gap-6">
+          <SocialIcon href="#" aria-label="Instagram">
+            <FiInstagram className="h-5 w-5" />
+          </SocialIcon>
+          <SocialIcon href="#" aria-label="Twitter">
+            <FiTwitter className="h-5 w-5" />
+          </SocialIcon>
+          <SocialIcon href="#" aria-label="LinkedIn">
+            <FiLinkedin className="h-5 w-5" />
+          </SocialIcon>
+        </div>
+      </div>
+
+      <div className="map-container w-full lg:w-1/2 min-h-[400px] lg:min-h-screen order-1 lg:order-2">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125743.59378619374!2d76.2425447721516!3d9.97086842918805!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b080d514abec6bf%3A0xbd582caa5844192!2sKochi%2C%20Kerala!5e0!3m2!1sen!2sin!4v1723748281000!5m2!1sen!2sin"
+          className="w-full h-full border-0"
+          allowFullScreen
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+        ></iframe>
       </div>
     </div>
+  );
+};
+
+interface SocialIconProps {
+  href: string;
+  children: ReactNode;
+  "aria-label": string;
+}
+
+const SocialIcon: FC<SocialIconProps> = ({ href, children, ...props }) => {
+  const iconRef = useRef<HTMLSpanElement>(null);
+
+  const handleMouseEnter = () => {
+    gsap.to(iconRef.current, {
+      rotation: 360,
+      duration: 0.5,
+      ease: "power2.out",
+      overwrite: "auto",
+    });
+  };
+
+  const handleMouseLeave = () => {
+    gsap.to(iconRef.current, {
+      rotation: 0,
+      duration: 0.5,
+      ease: "power2.inOut",
+      overwrite: "auto",
+    });
+  };
+
+  return (
+    <a
+      href={href}
+      className="group h-12 w-12 flex items-center justify-center rounded-full border-2 border-[#401d01]/20 text-[#401d01]/70 transition-all duration-300 hover:border-[#401d01] hover:bg-[#401d01] hover:text-white"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      {...props}
+    >
+      <span ref={iconRef}>{children}</span>
+    </a>
+  );
+};
+
+interface AnimatedContactLinkProps {
+  href: string;
+  children: ReactNode;
+}
+
+const AnimatedContactLink: FC<AnimatedContactLinkProps> = ({
+  href,
+  children,
+}) => {
+  const arrowBoxRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLSpanElement>(null);
+
+  const handleMouseEnter = () => {
+    gsap.to(arrowBoxRef.current, {
+      scaleX: 1,
+      opacity: 1,
+      duration: 0.4,
+      ease: "power3.out",
+    });
+    gsap.to(textRef.current, {
+      x: 40,
+      duration: 0.4,
+      ease: "power3.out",
+    });
+  };
+
+  const handleMouseLeave = () => {
+    gsap.to(arrowBoxRef.current, {
+      scaleX: 0,
+      opacity: 0,
+      duration: 0.4,
+      ease: "power3.inOut",
+    });
+    gsap.to(textRef.current, {
+      x: 0,
+      duration: 0.4,
+      ease: "power3.inOut",
+    });
+  };
+
+  return (
+    <a
+      href={href}
+      className="font-syne relative block text-md font-medium transition-colors hover:text-black py-1"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div
+        ref={arrowBoxRef}
+        className="absolute left-0 top-0 bottom-0 my-auto h-8 w-8 flex items-center justify-center bg-[#401d01] text-white rounded-md origin-left"
+        style={{ transform: "scaleX(0)", opacity: 0 }}
+      >
+        <FiArrowRight className="transform -rotate-45" />
+      </div>
+      <span ref={textRef} className="relative block">
+        {children}
+      </span>
+    </a>
   );
 };
 
