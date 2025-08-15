@@ -4,17 +4,15 @@ import React, { useLayoutEffect, useRef, useState, useEffect } from "react";
 import Contact from "./Contact";
 import Footer from "./Footer";
 
-// FIX: Define a more specific type for the GSAP object on the window
-// This satisfies the 'no-explicit-any' rule properly.
+// FIX: Added more specific types for GSAP to satisfy the linter
 declare global {
   interface Window {
     gsap: {
-      registerPlugin: (plugin: any) => void;
-      timeline: (vars?: object) => any;
-      matchMedia: () => any;
-      context: (func: () => void, scope?: React.RefObject<HTMLElement>) => any;
+      registerPlugin(...plugins: object[]): void;
+      timeline(vars?: gsap.TimelineVars): gsap.core.Timeline;
+      matchMedia(): gsap.MatchMedia;
     };
-    ScrollTrigger: any; // ScrollTrigger can remain 'any' if its type is complex to define
+    ScrollTrigger: object;
   }
 }
 

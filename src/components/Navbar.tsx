@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  useMemo,
+} from "react";
 import Link from "next/link";
 import { FiMenu, FiX } from "react-icons/fi";
 import MobileNav from "./MobileNav";
@@ -13,15 +19,18 @@ const Navbar = () => {
   const isHoveringRef = useRef(false);
   const [activeSection, setActiveSection] = useState<string>("#home");
 
-  const navLinks = [
-    { href: "#home", label: "Home" },
-    { href: "#about", label: "About" },
-    { href: "#info", label: "Info" },
-    { href: "#videos", label: "Videos" },
-    { href: "#contact", label: "Contact" },
-  ];
+  // FIX: Wrapped navLinks in useMemo to prevent re-creation on every render
+  const navLinks = useMemo(
+    () => [
+      { href: "#home", label: "Home" },
+      { href: "#about", label: "About" },
+      { href: "#info", label: "Info" },
+      { href: "#videos", label: "Videos" },
+      { href: "#contact", label: "Contact" },
+    ],
+    []
+  );
 
-  // FIX: Wrapped hideNavbar in useCallback to stabilize its reference
   const hideNavbar = useCallback(() => {
     hideTimeoutRef.current = setTimeout(() => {
       if (!isHoveringRef.current) {
@@ -45,17 +54,15 @@ const Navbar = () => {
       window.removeEventListener("scroll", handleScroll);
       if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
     };
-  }, [hideNavbar]); // FIX: Added hideNavbar as a dependency
+  }, [hideNavbar]);
 
   useEffect(() => {
     const sections = navLinks.map((link) => document.querySelector(link.href));
-
     const observerOptions = {
       root: null,
       rootMargin: "-50% 0px -50% 0px",
       threshold: 0,
     };
-
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -63,13 +70,11 @@ const Navbar = () => {
         }
       });
     }, observerOptions);
-
     sections.forEach((section) => {
       if (section) {
         observer.observe(section);
       }
     });
-
     return () => {
       sections.forEach((section) => {
         if (section) {
@@ -77,7 +82,7 @@ const Navbar = () => {
         }
       });
     };
-  }, [navLinks]); // FIX: Added navLinks to the dependency array
+  }, [navLinks]); // This dependency is now stable thanks to useMemo
 
   const handleMouseEnter = () => {
     isHoveringRef.current = true;
@@ -171,7 +176,6 @@ const Navbar = () => {
           </div>
         </nav>
       </header>
-
       <div className="md:hidden fixed top-4 right-4 z-50 bg-black/10 backdrop-blur-sm flex items-center rounded-full p-2">
         <button
           onClick={() => setIsOpen(!isOpen)}
@@ -181,7 +185,6 @@ const Navbar = () => {
           {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
         </button>
       </div>
-
       <MobileNav
         isOpen={isOpen}
         navLinks={navLinks}
