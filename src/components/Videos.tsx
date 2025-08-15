@@ -2,7 +2,7 @@ import VideosSection from "@/components/videos/VideoSection";
 
 const App = () => {
   return (
-    <main className="bg-gray-50 text-stone-800">
+    <main id="videos" className="bg-gray-50 text-stone-800">
       <div className="container mx-auto px-4 py-20 text-center">
         <h2 className="text-4xl md:text-8xl font-bold mb-4 font-braven">
           Videos
