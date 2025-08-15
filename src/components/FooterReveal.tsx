@@ -4,6 +4,14 @@ import React, { useLayoutEffect, useRef, useState, useEffect } from "react";
 import Contact from "./Contact";
 import Footer from "./Footer";
 
+// FIX: Augment the global Window interface to inform TypeScript about GSAP
+declare global {
+  interface Window {
+    gsap: any;
+    ScrollTrigger: any;
+  }
+}
+
 const FooterReveal = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const contactSectionRef = useRef<HTMLDivElement>(null);
@@ -46,8 +54,9 @@ const FooterReveal = () => {
   useLayoutEffect(() => {
     if (!isGsapLoaded) return;
 
-    const gsap = (window as any).gsap;
-    const ScrollTrigger = (window as any).ScrollTrigger;
+    // FIX: No more need for '(window as any)'
+    const gsap = window.gsap;
+    const ScrollTrigger = window.ScrollTrigger;
     gsap.registerPlugin(ScrollTrigger);
 
     // Use matchMedia to apply animations only to desktop screens
@@ -77,21 +86,13 @@ const FooterReveal = () => {
 
   return (
     <div ref={containerRef} className="w-full bg-[#F8F5F2]">
-      {/* This container is relative. On mobile, its children stack normally.
-        On desktop (lg), it becomes sticky to enable the pinning animation.
-      */}
       <div className="relative lg:sticky top-0 lg:h-screen w-full lg:overflow-hidden">
-        {/* Contact section is now FIRST in the code for correct mobile order. */}
         <div
           ref={contactSectionRef}
           className="relative z-20 w-full bg-[#F8F5F2]"
         >
           <Contact />
         </div>
-
-        {/* Footer is now SECOND. On mobile, it appears after Contact.
-          On desktop, it's positioned absolutely behind the Contact section.
-        */}
         <div className="relative lg:absolute bottom-0 left-0 z-10 w-full lg:h-[50vh]">
           <Footer />
         </div>
