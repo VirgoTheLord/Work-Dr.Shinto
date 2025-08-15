@@ -19,7 +19,9 @@ const images = ["/1.jpg", "/2.jpg", "/3.jpg", "/4.jpg"];
 const FIRST_NAME = "Dr. Shinto";
 const LAST_NAME = "Rajappan.";
 
-const Hero = forwardRef<HTMLDivElement, React.PropsWithChildren<{}>>(
+// ✨ FIX: Changed React.PropsWithChildren<{}> to React.PropsWithChildren
+// This resolves the '@typescript-eslint/no-empty-object-type' error.
+const Hero = forwardRef<HTMLDivElement, React.PropsWithChildren>(
   (props, ref) => {
     const { isAnimationReady } = useAnimationContext();
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -92,13 +94,11 @@ const Hero = forwardRef<HTMLDivElement, React.PropsWithChildren<{}>>(
           { autoAlpha: 0, y: -30 },
           { autoAlpha: 1, y: 0, duration: 0.8, delay: 0.2 }
         )
-          // ✨ FIX: Make the parent containers visible right before the character animation starts.
           .set(
             [firstNameRef.current, lastNameRef.current],
             { autoAlpha: 1 },
             "-=0.4"
           )
-          // The animation now brings the characters down into view.
           .to(
             splitFirstName.chars,
             {
@@ -107,7 +107,7 @@ const Hero = forwardRef<HTMLDivElement, React.PropsWithChildren<{}>>(
               duration: 0.6,
               stagger: 0.05,
             },
-            "<" // Use "<" to start at the same time as the .set() call above
+            "<"
           )
           .to(
             splitLastName.chars,
@@ -117,7 +117,7 @@ const Hero = forwardRef<HTMLDivElement, React.PropsWithChildren<{}>>(
               duration: 0.6,
               stagger: 0.05,
             },
-            "-=0.5" // Overlap for a smoother feel
+            "-=0.5"
           )
           .fromTo(
             detailsRef.current,
@@ -167,7 +167,6 @@ const Hero = forwardRef<HTMLDivElement, React.PropsWithChildren<{}>>(
 
         {/* foreground */}
         <div className="relative z-10 w-full font-raleway">
-          {/* 👇 These inline styles are essential for preventing the flash */}
           <p
             ref={subtitleRef}
             style={{ visibility: "hidden" }}

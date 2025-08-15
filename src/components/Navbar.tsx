@@ -1,6 +1,5 @@
 "use client";
 
-import Hamburger from "hamburger-react";
 import React from "react";
 
 const Navbar = () => {

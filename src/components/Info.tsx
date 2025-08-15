@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useLayoutEffect } from "react";
+import Image from "next/image";
 import { gsap } from "gsap";
 import { FaArrowRight } from "react-icons/fa";
 import ParallaxSection from "./ParallaxSection";
@@ -43,7 +44,7 @@ const Info = () => {
     isDesktop.current = window.matchMedia("(min-width: 1024px)").matches;
 
     cardData.forEach((card) => {
-      const img = new Image();
+      const img = new window.Image();
       img.src = card.image;
     });
   }, []);
@@ -59,7 +60,6 @@ const Info = () => {
         const title = card.querySelector(".card-title");
         const content = card.querySelector(".card-content");
         const arrowIcon = card.querySelector(".card-arrow-icon");
-        const arrowWrapper = card.querySelector(".card-arrow-wrapper");
         const image = card.querySelector(".card-image");
         const number = card.querySelector(".card-number");
         const overlay = card.querySelector(".card-overlay");
@@ -79,11 +79,6 @@ const Info = () => {
           .to([title, number], { color: "#ffffff", duration: 0.4 }, "<")
           .to(content, { color: "#e2e8f0", duration: 0.4 }, "<")
           .to(content, { opacity: 1, y: 0, duration: 0.4, delay: 0.1 }, "<")
-          .to(
-            arrowWrapper,
-            { scale: 0, opacity: 0, duration: 0.3, ease: "power2.in" },
-            "<"
-          )
           .to(
             arrowIcon,
             { autoAlpha: 0, x: 15, rotate: 45, duration: 0.3 },
@@ -168,10 +163,11 @@ const Info = () => {
                   lg:flex-1
                 `}
               >
-                <img
+                <Image
                   src={card.image}
                   alt={card.title}
-                  className="card-image absolute inset-0 w-full h-full object-cover"
+                  fill
+                  className="card-image object-cover"
                   style={{
                     willChange: "clip-path",
                     clipPath: "circle(0% at 100% 100%)",

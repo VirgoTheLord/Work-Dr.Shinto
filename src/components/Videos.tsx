@@ -8,8 +8,8 @@ const App = () => {
           Videos
         </h2>
         <p className="text-lg md:text-lg text-stone-700 max-w-3xl mx-auto font-raleway">
-          We've prepared these short guides to help you understand our imaging
-          procedures better.
+          We&apos;ve prepared these short guides to help you understand our
+          imaging procedures better.
         </p>
       </div>
       <VideosSection />

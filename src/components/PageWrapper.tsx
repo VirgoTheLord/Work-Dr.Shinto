@@ -1,4 +1,3 @@
-// components/PageWrapper.tsx
 "use client";
 
 import React, { useState, useLayoutEffect, useRef } from "react";
@@ -62,7 +61,8 @@ const PageWrapper = ({ children }: { children: React.ReactNode }) => {
         },
         "-=0.5"
       );
-  }, []);
+    // ✨ FIX: Added 'setAnimationReady' to the dependency array
+  }, [setAnimationReady]);
 
   return (
     <div>
