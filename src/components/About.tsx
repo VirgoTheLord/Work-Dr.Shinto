@@ -29,26 +29,33 @@ const About = forwardRef<HTMLDivElement, AboutProps>((props, ref) => {
           </div>
 
           <div className="relative z-10 w-full md:w-3/5">
+            {/* ✨ 1. Updated intro text */}
             <p className="text-orange-900 text-sm font-semibold mb-2 font-raleway">
-              Meet Dr. Shinto Rajappan, MD
+              Meet Dr. Shinto Rajappan, MD (Clinical Oncology)
             </p>
+            {/* ✨ 2. Updated title */}
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold font-braven text-neutral-900 mb-6">
-              A Leader in Orthopedic & Joint Replacement Surgery
+              A Leading Voice in Clinical Oncology
             </h1>
+            {/* ✨ 3. Updated content */}
             <p className="text-neutral-600 leading-relaxed mb-6 font-raleway">
-              Dr. Shinto Rajappan is a renowned{" "}
-              <strong>orthopedic surgeon</strong> specializing in advanced{" "}
-              <strong>joint replacement</strong> and{" "}
-              <strong>arthroscopic surgery</strong>. With extensive training,
-              including D&apos;Ortho, DNB, and an Mch in Orthopedics, he brings
-              a wealth of knowledge to his practice.
+              Dr. Shinto Rajappan is a distinguished{" "}
+              <strong>clinical oncologist</strong> dedicated to advancing cancer
+              care. He completed his MBBS from Government Medical College,
+              Kannur, and pursued his MD at Government Medical College,
+              Thrissur. Currently, he serves in the{" "}
+              <strong>
+                Oncology Department at General Hospital, Ernakulam
+              </strong>
+              .
             </p>
             <p className="text-neutral-600 leading-relaxed font-raleway">
-              His approach combines cutting-edge surgical techniques with a deep
-              commitment to <strong>patient-centered care</strong>. Dr. Rajappan
-              is dedicated to helping patients regain mobility and improve their
-              quality of life through personalized treatment plans and
-              compassionate communication.
+              A respected <strong>Fellow of AROI and IMA</strong>, Dr. Rajappan
+              is deeply involved in the academic community. He has{" "}
+              <strong>co-published research papers</strong> and is a highly
+              regarded orator, frequently invited to give lectures at seminars
+              and conferences, sharing his expertise and passion for improving
+              patient outcomes.
             </p>
             <div className="w-16 h-1 bg-orange-950 mt-8"></div>
           </div>

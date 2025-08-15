@@ -110,7 +110,7 @@ const Footer = () => {
     >
       <div className="w-full max-w-7xl flex flex-col md:flex-row items-center justify-between gap-8">
         <div className="text-center md:text-left">
-          <h2 className="footer-title font-braven text-5xl md:text-7xl">
+          <h2 className="footer-title font-braven text-5xl md:text-8xl">
             Dr. Shinto Rajappan.
           </h2>
           <p className="footer-desc font-raleway text-md opacity-70 mt-2">

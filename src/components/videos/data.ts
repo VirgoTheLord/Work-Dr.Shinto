@@ -10,36 +10,36 @@ export interface Video {
 export const videos: Video[] = [
   {
     id: "zOmxcdGupqA",
-    title: "Understanding MRI: A Patient's Guide",
+    title: "What is Chemotherapy?",
     description:
-      "A comprehensive look into the MRI procedure, helping you prepare for your scan with confidence.",
+      "An overview of chemotherapy, explaining how it works to treat cancer and what patients can typically expect during treatment.",
     bgColor: "bg-[#e0c7ae]",
     textColor: "text-[#401d01]",
     descriptionColor: "text-stone-600",
   },
   {
     id: "XW9nTVvzkvA",
-    title: "What to Expect During a CT Scan",
+    title: "Radiation Therapy Explained",
     description:
-      "This guide demystifies the CT scan process, from arrival to completion, ensuring you know what to expect.",
+      "Learn about radiation therapy, a common cancer treatment that uses high-energy rays to target and destroy cancer cells.",
     bgColor: "bg-[#401d01]",
     textColor: "text-white",
     descriptionColor: "text-stone-300",
   },
   {
     id: "4BMkuiqjhy0",
-    title: "The Role of PET-CT in Cancer Staging",
+    title: "Understanding Immunotherapy",
     description:
-      "Explore how advanced PET-CT imaging plays a crucial role in accurately staging and managing cancer.",
+      "Discover how immunotherapy harnesses the body's own immune system to fight cancer, marking a major advancement in treatment.",
     bgColor: "bg-[#e0c7ae]",
     textColor: "text-[#401d01]",
     descriptionColor: "text-stone-600",
   },
   {
     id: "hTcT9nCrRW8",
-    title: "Introduction to Ultrasound Imaging",
+    title: "Targeted Therapy for Cancer",
     description:
-      "Learn the basics of ultrasound technology and its safe, non-invasive applications in medical diagnostics.",
+      "An introduction to targeted therapy, which uses drugs to identify and attack specific cancer cells with less harm to normal cells.",
     bgColor: "bg-[#401d01]",
     textColor: "text-white",
     descriptionColor: "text-stone-300",

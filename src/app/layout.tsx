@@ -24,8 +24,9 @@ const syne = Syne({
 });
 
 export const metadata: Metadata = {
-  title: "Dr. Shinto Rajappan",
-  description: "Portfolio.",
+  title: "Dr. Shinto Rajappan, MD | Clinical Oncologist",
+  description:
+    "Explore the professional portfolio of Dr. Shinto Rajappan, a dedicated clinical oncologist. Showcasing his research, publications, and professional experience.",
 };
 
 export default function RootLayout({
