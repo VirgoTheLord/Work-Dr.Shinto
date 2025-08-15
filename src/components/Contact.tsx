@@ -10,6 +10,8 @@ import {
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/all";
+import AnimatedContactLink from "./AnimatedContactLink";
+import SocialIcon from "./SocialIcon";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -138,109 +140,6 @@ const Contact: FC = () => {
         ></iframe>
       </div>
     </div>
-  );
-};
-
-// ... (The rest of your component code for SocialIcon and AnimatedContactLink remains the same)
-
-interface SocialIconProps {
-  href: string;
-  children: ReactNode;
-  "aria-label": string;
-}
-
-const SocialIcon: FC<SocialIconProps> = ({ href, children, ...props }) => {
-  const iconRef = useRef<HTMLSpanElement>(null);
-
-  const handleMouseEnter = () => {
-    gsap.to(iconRef.current, {
-      rotation: 360,
-      duration: 0.5,
-      ease: "power2.out",
-      overwrite: "auto",
-    });
-  };
-
-  const handleMouseLeave = () => {
-    gsap.to(iconRef.current, {
-      rotation: 0,
-      duration: 0.5,
-      ease: "power2.inOut",
-      overwrite: "auto",
-    });
-  };
-
-  return (
-    <a
-      href={href}
-      className="group h-12 w-12 flex items-center justify-center rounded-full border-2 border-[#401d01]/20 text-[#401d01]/70 transition-all duration-300 hover:border-[#401d01] hover:bg-[#401d01] hover:text-white"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      {...props}
-    >
-      <span ref={iconRef}>{children}</span>
-    </a>
-  );
-};
-
-interface AnimatedContactLinkProps {
-  href: string;
-  children: ReactNode;
-}
-
-const AnimatedContactLink: FC<AnimatedContactLinkProps> = ({
-  href,
-  children,
-}) => {
-  const arrowBoxRef = useRef<HTMLDivElement>(null);
-  const textRef = useRef<HTMLSpanElement>(null);
-
-  const handleMouseEnter = () => {
-    gsap.to(arrowBoxRef.current, {
-      scaleX: 1,
-      opacity: 1,
-      duration: 0.4,
-      ease: "power3.out",
-    });
-    gsap.to(textRef.current, {
-      x: 40,
-      duration: 0.4,
-      ease: "power3.out",
-    });
-  };
-
-  const handleMouseLeave = () => {
-    gsap.to(arrowBoxRef.current, {
-      scaleX: 0,
-      opacity: 0,
-      duration: 0.4,
-      ease: "power3.inOut",
-    });
-    gsap.to(textRef.current, {
-      x: 0,
-      duration: 0.4,
-      ease: "power3.inOut",
-    });
-  };
-
-  return (
-    <a
-      href={href}
-      className="font-syne relative block text-md font-medium transition-colors hover:text-black py-1"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      <div
-        ref={arrowBoxRef}
-        className="absolute left-0 top-0 bottom-0 my-auto h-8 w-8 flex items-center justify-center bg-[#401d01] text-white origin-left"
-        style={{ transform: "scaleX(0)", opacity: 0 }}
-      >
-        <FiArrowRight className="transform -rotate-45" />
-      </div>
-      <span ref={textRef} className="relative block">
-        {children}
-      </span>
-    </a>
   );
 };
 
