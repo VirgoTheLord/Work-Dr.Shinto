@@ -176,7 +176,7 @@ const Info = () => {
                     <div className="card-number text-7xl lg:text-9xl font-light text-gray-800/20 py-4 font-braven">
                       {String(index + 1).padStart(2, "0")}
                     </div>
-                    <h3 className="card-title mt-4 text-2xl lg:text-4xl font-bold tracking-tight text-gray-800 py-4 font-braven">
+                    <h3 className="card-title mt-4 text-4xl font-bold tracking-tight text-gray-800 py-4 font-braven">
                       {card.title}
                     </h3>
                   </div>
