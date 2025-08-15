@@ -166,7 +166,7 @@ const Contact: FC = () => {
       {/* ✨ 2. Reduced map height on mobile */}
       <div className="map-container w-full lg:w-1/2 h-[25vh] lg:h-auto">
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125743.59378619374!2d76.2425447721516!3d9.97086842918805!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b080d514abec6bf%3A0xbd582caa5844192!2sKochi%2C%20Kerala!5e0!3m2!1sen!2sin!4v1723748281000!5m2!1sen!2sin"
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyB2NIWI3Tv9iDPrlnowr_0ZqZWoAQydKJU&q=X7PQ%2BMMP%20Kochi%2C%20Kerala%2C%20India&maptype=roadmap"
           className="w-full h-full border-0"
           allowFullScreen
           loading="lazy"
