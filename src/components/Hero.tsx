@@ -9,11 +9,10 @@ import React, {
 } from "react";
 import Image from "next/image";
 import gsap from "gsap";
-import { SplitText } from "gsap/SplitText"; // ✨ 1. Import SplitText
+import { SplitText } from "gsap/SplitText";
 import { AnimatedButtonWrapper } from "./AnimatedButtonWrapper";
 import { useAnimationContext } from "@/context/AnimationContext";
 
-// ✨ 2. Register the plugin
 gsap.registerPlugin(SplitText);
 
 const images = ["/1.jpg", "/2.jpg", "/3.jpg", "/4.jpg"];
@@ -29,8 +28,6 @@ const Hero = forwardRef<HTMLDivElement, React.PropsWithChildren<{}>>(
     const subtitleRef = useRef<HTMLParagraphElement | null>(null);
     const detailsRef = useRef<HTMLParagraphElement | null>(null);
     const buttonsRef = useRef<HTMLDivElement | null>(null);
-
-    // ✨ 3. Simplified refs for the names
     const firstNameRef = useRef<HTMLSpanElement | null>(null);
     const lastNameRef = useRef<HTMLSpanElement | null>(null);
 
@@ -70,7 +67,6 @@ const Hero = forwardRef<HTMLDivElement, React.PropsWithChildren<{}>>(
       }
 
       const ctx = gsap.context(() => {
-        // ✨ 4. Create SplitText instances
         const splitFirstName = new SplitText(firstNameRef.current, {
           type: "chars",
         });
@@ -78,12 +74,14 @@ const Hero = forwardRef<HTMLDivElement, React.PropsWithChildren<{}>>(
           type: "chars",
         });
 
-        // Hide parent containers initially to prevent FOUC
-        gsap.set([firstNameRef.current, lastNameRef.current], { autoAlpha: 1 });
+        // Set overflow hidden on parents for the clipping mask effect.
+        gsap.set([firstNameRef.current, lastNameRef.current], {
+          overflow: "hidden",
+        });
 
-        // Set initial state for animations
+        // Set the initial state of the characters to be ABOVE the viewport.
         gsap.set([splitFirstName.chars, splitLastName.chars], {
-          yPercent: 100,
+          yPercent: -100,
           autoAlpha: 0,
         });
 
@@ -94,6 +92,13 @@ const Hero = forwardRef<HTMLDivElement, React.PropsWithChildren<{}>>(
           { autoAlpha: 0, y: -30 },
           { autoAlpha: 1, y: 0, duration: 0.8, delay: 0.2 }
         )
+          // ✨ FIX: Make the parent containers visible right before the character animation starts.
+          .set(
+            [firstNameRef.current, lastNameRef.current],
+            { autoAlpha: 1 },
+            "-=0.4"
+          )
+          // The animation now brings the characters down into view.
           .to(
             splitFirstName.chars,
             {
@@ -102,7 +107,7 @@ const Hero = forwardRef<HTMLDivElement, React.PropsWithChildren<{}>>(
               duration: 0.6,
               stagger: 0.05,
             },
-            "-=0.4"
+            "<" // Use "<" to start at the same time as the .set() call above
           )
           .to(
             splitLastName.chars,
@@ -112,7 +117,7 @@ const Hero = forwardRef<HTMLDivElement, React.PropsWithChildren<{}>>(
               duration: 0.6,
               stagger: 0.05,
             },
-            "-=0.4"
+            "-=0.5" // Overlap for a smoother feel
           )
           .fromTo(
             detailsRef.current,
@@ -127,7 +132,6 @@ const Hero = forwardRef<HTMLDivElement, React.PropsWithChildren<{}>>(
             "<0.2"
           );
 
-        // ✨ 5. Add cleanup for SplitText
         return () => {
           splitFirstName.revert();
           splitLastName.revert();
@@ -144,7 +148,7 @@ const Hero = forwardRef<HTMLDivElement, React.PropsWithChildren<{}>>(
           else if (ref) ref.current = node;
           scopeRef.current = node;
         }}
-        className="min-h-screen relative w-full flex flex-col justify-center items-start px-6 md:px-10 pt-20 pb-32 sm:py-20 overflow-hidden"
+        className="min-h-screen relative w-full flex flex-col justify-center items-start px-6 md:px-10 pt-20 pb-32 sm:py-20"
       >
         {/* background carousel */}
         <div className="absolute inset-0 z-0">
@@ -163,6 +167,7 @@ const Hero = forwardRef<HTMLDivElement, React.PropsWithChildren<{}>>(
 
         {/* foreground */}
         <div className="relative z-10 w-full font-raleway">
+          {/* 👇 These inline styles are essential for preventing the flash */}
           <p
             ref={subtitleRef}
             style={{ visibility: "hidden" }}
@@ -171,7 +176,6 @@ const Hero = forwardRef<HTMLDivElement, React.PropsWithChildren<{}>>(
             Creative Developer & Designer
           </p>
 
-          {/* ✨ 6. Simplified JSX for the name */}
           <h1 className="font-braven text-white text-6xl font-black sm:text-7xl md:text-8xl lg:text-[9vw] leading-tight mt-2">
             <div className="flex flex-col sm:flex-row sm:gap-x-4 md:gap-10">
               <span
