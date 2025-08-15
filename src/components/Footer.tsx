@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useRef, useLayoutEffect } from "react";
+import React, { useRef, useLayoutEffect, FC, ReactNode } from "react";
 import { FiMail, FiPhone, FiArrowUp } from "react-icons/fi";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import AnimatedContactLink from "./AnimatedContactLink"; // Ensure this is imported
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -17,18 +18,17 @@ const Footer = () => {
   const iconColorTween = useRef<gsap.core.Tween | null>(null);
 
   useLayoutEffect(() => {
+    // Main safety check: Don't run any GSAP code if the footer isn't rendered yet.
+    if (!footerRef.current) return;
+
     const ctx = gsap.context(() => {
-      // --- Content reveal animation ---
       const tl = gsap.timeline({
         paused: true,
         defaults: { opacity: 0, y: 30, ease: "power3.out", duration: 0.8 },
       });
 
-      // NEW: The ".footer-contact-link" is now ONLY on the mobile links,
-      // so this animation will not affect the desktop links.
       tl.from(".footer-title", {})
         .from(".footer-desc", {}, "-=0.6")
-        .from(".footer-contact-link", { stagger: 0.2 }, "-=0.6")
         .from(".footer-arrow", {}, "-=0.6");
 
       ScrollTrigger.create({
@@ -38,7 +38,6 @@ const Footer = () => {
         onLeaveBack: () => tl.reverse(),
       });
 
-      // --- Arrow replacement animation ---
       arrowHoverTl.current = gsap
         .timeline({ paused: true, reversed: true })
         .to(arrowRef.current, {
@@ -69,11 +68,10 @@ const Footer = () => {
     arrowHoverTl.current?.play();
     gsap.to(e.currentTarget, { borderColor: "transparent", duration: 0.3 });
 
-    // Continuous background color animation
     bgHoverTween.current = gsap.to(arrowBgRef.current, {
       keyframes: [
         { backgroundColor: "#F8F5F2", duration: 0.4 },
-        { backgroundColor: "#c7a385", duration: 0.4 }, // A mid-tone color
+        { backgroundColor: "#c7a385", duration: 0.4 },
         { backgroundColor: "#401d01", duration: 0.4 },
         { backgroundColor: "transparent", duration: 0.4 },
       ],
@@ -81,7 +79,6 @@ const Footer = () => {
       repeat: -1,
     });
 
-    // Sync arrow icon color with background
     iconColorTween.current = gsap.to(arrowIconRef.current, {
       keyframes: [
         { color: "#401d01", duration: 0.4 },
@@ -98,11 +95,9 @@ const Footer = () => {
     arrowHoverTl.current?.reverse();
     gsap.to(e.currentTarget, { borderColor: "#F8F5F2", duration: 0.3 });
 
-    // Stop and kill the continuous animations
     bgHoverTween.current?.kill();
     iconColorTween.current?.kill();
 
-    // Reset colors
     gsap.to(arrowBgRef.current, {
       backgroundColor: "transparent",
       duration: 0.2,
