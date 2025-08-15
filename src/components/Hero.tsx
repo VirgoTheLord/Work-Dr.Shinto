@@ -1,24 +1,40 @@
 "use client";
 
-import React, { forwardRef, useEffect, useRef, useState } from "react";
+import React, {
+  forwardRef,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import Image from "next/image";
 import gsap from "gsap";
-import { SplitText } from "gsap/all";
+import { SplitText } from "gsap/SplitText"; // ✨ 1. Import SplitText
 import { AnimatedButtonWrapper } from "./AnimatedButtonWrapper";
+import { useAnimationContext } from "@/context/AnimationContext";
+
+// ✨ 2. Register the plugin
+gsap.registerPlugin(SplitText);
 
 const images = ["/1.jpg", "/2.jpg", "/3.jpg", "/4.jpg"];
+const FIRST_NAME = "Dr. Shinto";
+const LAST_NAME = "Rajappan.";
 
 const Hero = forwardRef<HTMLDivElement, React.PropsWithChildren<{}>>(
   (props, ref) => {
+    const { isAnimationReady } = useAnimationContext();
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const imageContainerRef = useRef(null);
 
-    const nameRef1 = useRef(null);
-    const nameRef2 = useRef(null);
-    const subtitleRef = useRef(null);
-    const detailsRef = useRef(null);
-    const buttonsRef = useRef(null);
+    const scopeRef = useRef<HTMLDivElement | null>(null);
+    const subtitleRef = useRef<HTMLParagraphElement | null>(null);
+    const detailsRef = useRef<HTMLParagraphElement | null>(null);
+    const buttonsRef = useRef<HTMLDivElement | null>(null);
 
+    // ✨ 3. Simplified refs for the names
+    const firstNameRef = useRef<HTMLSpanElement | null>(null);
+    const lastNameRef = useRef<HTMLSpanElement | null>(null);
+
+    // Preload images + rotate
     useEffect(() => {
       images.forEach((src) => {
         const img = new window.Image();
@@ -26,103 +42,112 @@ const Hero = forwardRef<HTMLDivElement, React.PropsWithChildren<{}>>(
       });
 
       const interval = setInterval(() => {
-        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+        setCurrentImageIndex((prev) => (prev + 1) % images.length);
       }, 5000);
-
       return () => clearInterval(interval);
     }, []);
 
+    // Crossfade background images
     useEffect(() => {
-      if (imageContainerRef.current) {
-        const imageElements = gsap.utils.toArray(
-          ".carousel-image"
-        ) as HTMLElement[];
-
-        gsap.to(imageElements[currentImageIndex], {
-          autoAlpha: 1,
-          duration: 1.5,
-          ease: "power2.inOut",
-        });
-
-        gsap.to(
-          imageElements.filter((_, i) => i !== currentImageIndex),
-          {
-            autoAlpha: 0,
-            duration: 1.5,
-            ease: "power2.inOut",
-          }
-        );
-      }
+      gsap.to(".carousel-image", {
+        autoAlpha: (i: number) => (i === currentImageIndex ? 1 : 0),
+        duration: 1.5,
+        ease: "power2.inOut",
+      });
     }, [currentImageIndex]);
 
-    useEffect(() => {
+    // Hero text animation
+    useLayoutEffect(() => {
       if (
-        nameRef1.current &&
-        nameRef2.current &&
-        subtitleRef.current &&
-        detailsRef.current &&
-        buttonsRef.current
+        !isAnimationReady ||
+        !subtitleRef.current ||
+        !detailsRef.current ||
+        !buttonsRef.current ||
+        !firstNameRef.current ||
+        !lastNameRef.current
       ) {
-        gsap.registerPlugin(SplitText);
-        const split1 = SplitText.create(nameRef1.current, { type: "chars" });
-        const split2 = SplitText.create(nameRef2.current, { type: "chars" });
-
-        // Set the parent spans to clip the falling letters
-        gsap.set([nameRef1.current, nameRef2.current], { overflow: "hidden" });
-
-        const tl = gsap.timeline();
-
-        tl.from(subtitleRef.current, {
-          yPercent: -50,
-          autoAlpha: 0,
-          duration: 0.7,
-          ease: "power2.out",
-          delay: 0.2,
-        })
-          .from(
-            split1.chars,
-            {
-              // Animate from 100% of their height above
-              yPercent: -100,
-              autoAlpha: 0,
-              stagger: 0.05, // A slightly slower stagger feels more like dropping
-              duration: 0.6,
-              ease: "power2.out",
-            },
-            "-=0.5"
-          )
-          .from(
-            split2.chars,
-            {
-              // Same animation for the second part of the name
-              yPercent: -100,
-              autoAlpha: 0,
-              stagger: 0.05,
-              duration: 0.6,
-              ease: "power2.out",
-            },
-            "-=0.5" // Overlap timelines for a smoother sequence
-          )
-          .from(
-            [detailsRef.current, buttonsRef.current],
-            {
-              yPercent: 50,
-              autoAlpha: 0,
-              stagger: 0.2,
-              duration: 0.7,
-              ease: "power2.out",
-            },
-            "-=0.7"
-          );
+        return;
       }
-    }, []);
+
+      const ctx = gsap.context(() => {
+        // ✨ 4. Create SplitText instances
+        const splitFirstName = new SplitText(firstNameRef.current, {
+          type: "chars",
+        });
+        const splitLastName = new SplitText(lastNameRef.current, {
+          type: "chars",
+        });
+
+        // Hide parent containers initially to prevent FOUC
+        gsap.set([firstNameRef.current, lastNameRef.current], { autoAlpha: 1 });
+
+        // Set initial state for animations
+        gsap.set([splitFirstName.chars, splitLastName.chars], {
+          yPercent: 100,
+          autoAlpha: 0,
+        });
+
+        const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
+
+        tl.fromTo(
+          subtitleRef.current,
+          { autoAlpha: 0, y: -30 },
+          { autoAlpha: 1, y: 0, duration: 0.8, delay: 0.2 }
+        )
+          .to(
+            splitFirstName.chars,
+            {
+              autoAlpha: 1,
+              yPercent: 0,
+              duration: 0.6,
+              stagger: 0.05,
+            },
+            "-=0.4"
+          )
+          .to(
+            splitLastName.chars,
+            {
+              autoAlpha: 1,
+              yPercent: 0,
+              duration: 0.6,
+              stagger: 0.05,
+            },
+            "-=0.4"
+          )
+          .fromTo(
+            detailsRef.current,
+            { autoAlpha: 0, y: 30 },
+            { autoAlpha: 1, y: 0, duration: 0.8 },
+            "-=0.3"
+          )
+          .fromTo(
+            buttonsRef.current,
+            { autoAlpha: 0, y: 30 },
+            { autoAlpha: 1, y: 0, duration: 0.8 },
+            "<0.2"
+          );
+
+        // ✨ 5. Add cleanup for SplitText
+        return () => {
+          splitFirstName.revert();
+          splitLastName.revert();
+        };
+      }, scopeRef);
+
+      return () => ctx.revert();
+    }, [isAnimationReady]);
 
     return (
       <div
-        ref={ref}
+        ref={(node) => {
+          if (typeof ref === "function") ref(node);
+          else if (ref) ref.current = node;
+          scopeRef.current = node;
+        }}
         className="min-h-screen relative w-full flex flex-col justify-center items-start px-6 md:px-10 pt-20 pb-32 sm:py-20 overflow-hidden"
       >
-        <div className="absolute inset-0 z-0" ref={imageContainerRef}>
+        {/* background carousel */}
+        <div className="absolute inset-0 z-0">
           {images.map((src, index) => (
             <Image
               key={index}
@@ -130,42 +155,61 @@ const Hero = forwardRef<HTMLDivElement, React.PropsWithChildren<{}>>(
               alt="Background"
               fill
               priority={index === 0}
-              className={`carousel-image object-cover ${
-                index === 0 ? "opacity-100" : "opacity-0"
-              }`}
+              className="carousel-image object-cover opacity-0"
             />
           ))}
-          <div className="absolute inset-0 bg-black/40"></div>
+          <div className="absolute inset-0 bg-black/40" />
         </div>
 
-        <div className="relative z-10 w-full">
-          <div className="font-raleway">
-            <p
-              ref={subtitleRef}
-              className="text-xs sm:text-sm uppercase tracking-widest font-raleway text-white/60"
-            >
-              Creative Developer & Designer
-            </p>
-            <h1 className="font-braven text-white text-6xl font-black sm:text-7xl md:text-8xl lg:text-[9vw] leading-tight mt-2">
-              <div className="flex flex-col sm:flex-row sm:gap-x-4 md:gap-10">
-                <span ref={nameRef1}>Dr. Shinto</span>
-                <span ref={nameRef2}>Rajappan.</span>
-              </div>
-            </h1>
-            <p
-              ref={detailsRef}
-              className="mt-4 text-base md:text-lg text-white/80"
-            >
-              Freelance • Kerala, India
-            </p>
-            <div ref={buttonsRef} className="mt-8 flex flex-wrap gap-4">
-              <AnimatedButtonWrapper href="#contact" variant="primary">
-                Book a Consult
-              </AnimatedButtonWrapper>
-              <AnimatedButtonWrapper href="#videos" variant="secondary">
-                Watch Videos
-              </AnimatedButtonWrapper>
+        {/* foreground */}
+        <div className="relative z-10 w-full font-raleway">
+          <p
+            ref={subtitleRef}
+            style={{ visibility: "hidden" }}
+            className="text-xs sm:text-sm uppercase tracking-widest font-raleway text-white/70"
+          >
+            Creative Developer & Designer
+          </p>
+
+          {/* ✨ 6. Simplified JSX for the name */}
+          <h1 className="font-braven text-white text-6xl font-black sm:text-7xl md:text-8xl lg:text-[9vw] leading-tight mt-2">
+            <div className="flex flex-col sm:flex-row sm:gap-x-4 md:gap-10">
+              <span
+                ref={firstNameRef}
+                className="whitespace-pre"
+                style={{ visibility: "hidden" }}
+              >
+                {FIRST_NAME}
+              </span>
+              <span
+                ref={lastNameRef}
+                className="whitespace-pre"
+                style={{ visibility: "hidden" }}
+              >
+                {LAST_NAME}
+              </span>
             </div>
+          </h1>
+
+          <p
+            ref={detailsRef}
+            style={{ visibility: "hidden" }}
+            className="mt-4 text-base md:text-lg text-white/85"
+          >
+            Freelance • Kerala, India
+          </p>
+
+          <div
+            ref={buttonsRef}
+            style={{ visibility: "hidden" }}
+            className="mt-8 flex flex-wrap gap-4"
+          >
+            <AnimatedButtonWrapper href="#contact" variant="primary">
+              Book a Consult
+            </AnimatedButtonWrapper>
+            <AnimatedButtonWrapper href="#videos" variant="secondary">
+              Watch Videos
+            </AnimatedButtonWrapper>
           </div>
         </div>
       </div>

@@ -5,6 +5,8 @@ import { ReactLenis } from "lenis/react";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import PageWrapper from "@/components/PageWrapper";
+import { AnimationProvider } from "@/context/AnimationContext";
 
 const braven = localFont({
   src: "/fonts/BravenRegular.ttf",
@@ -38,8 +40,12 @@ export default function RootLayout({
         className={`${braven.variable} ${raleway.variable} ${syne.variable} font-sans antialiased overflow-x-hidden`}
       >
         <ReactLenis root>
-          <Navbar />
-          {children}
+          <AnimationProvider>
+            <PageWrapper>
+              <Navbar />
+              {children}
+            </PageWrapper>
+          </AnimationProvider>
         </ReactLenis>
       </body>
     </html>
