@@ -17,25 +17,22 @@ const Footer = () => {
   const iconColorTween = useRef<gsap.core.Tween | null>(null);
 
   useLayoutEffect(() => {
+    // GSAP animations remain the same
     if (!footerRef.current) return;
-
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         paused: true,
         defaults: { opacity: 0, y: 30, ease: "power3.out", duration: 0.8 },
       });
-
       tl.from(".footer-title", {})
         .from(".footer-desc", {}, "-=0.6")
         .from(".footer-arrow", {}, "-=0.6");
-
       ScrollTrigger.create({
         trigger: footerRef.current,
         start: "top 80%",
         onEnter: () => tl.play(),
         onLeaveBack: () => tl.reverse(),
       });
-
       arrowHoverTl.current = gsap
         .timeline({ paused: true, reversed: true })
         .to(arrowRef.current, {
@@ -50,7 +47,6 @@ const Footer = () => {
           ease: "power2.out",
         });
     }, footerRef);
-
     return () => ctx.revert();
   }, []);
 
@@ -65,7 +61,6 @@ const Footer = () => {
   const handleArrowMouseEnter = (e: React.MouseEvent<HTMLAnchorElement>) => {
     arrowHoverTl.current?.play();
     gsap.to(e.currentTarget, { borderColor: "transparent", duration: 0.3 });
-
     bgHoverTween.current = gsap.to(arrowBgRef.current, {
       keyframes: [
         { backgroundColor: "#F8F5F2", duration: 0.4 },
@@ -76,7 +71,6 @@ const Footer = () => {
       ease: "none",
       repeat: -1,
     });
-
     iconColorTween.current = gsap.to(arrowIconRef.current, {
       keyframes: [
         { color: "#401d01", duration: 0.4 },
@@ -92,10 +86,8 @@ const Footer = () => {
   const handleArrowMouseLeave = (e: React.MouseEvent<HTMLAnchorElement>) => {
     arrowHoverTl.current?.reverse();
     gsap.to(e.currentTarget, { borderColor: "#F8F5F2", duration: 0.3 });
-
     bgHoverTween.current?.kill();
     iconColorTween.current?.kill();
-
     gsap.to(arrowBgRef.current, {
       backgroundColor: "transparent",
       duration: 0.2,
@@ -106,7 +98,8 @@ const Footer = () => {
   return (
     <footer
       ref={footerRef}
-      className="h-full w-full bg-[#401d01] text-[#F8F5F2] flex items-center justify-center p-8 overflow-hidden"
+      // THE FIX IS HERE: Added responsive padding to increase height on mobile
+      className="h-full w-full bg-[#401d01] text-[#F8F5F2] flex items-center justify-center py-24 md:py-8 px-8 overflow-hidden"
     >
       <div className="w-full max-w-7xl flex flex-col md:flex-row items-center justify-between gap-8">
         <div className="text-center md:text-left">
@@ -117,7 +110,6 @@ const Footer = () => {
             Committed to providing expert radiological insights.
           </p>
         </div>
-
         <a
           href="#top"
           onClick={handleBackToTop}

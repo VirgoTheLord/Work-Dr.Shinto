@@ -15,6 +15,7 @@ const Contact: FC = () => {
   const titleRef = useRef<HTMLHeadingElement>(null);
 
   useLayoutEffect(() => {
+    // GSAP animations remain the same
     const ctx = gsap.context(() => {
       if (titleRef.current) {
         const split = SplitText.create(titleRef.current, { type: "chars" });
@@ -32,7 +33,6 @@ const Contact: FC = () => {
           ease: "power3.out",
         });
       }
-
       gsap.from(".contact-block", {
         scrollTrigger: {
           trigger: containerRef.current,
@@ -45,7 +45,6 @@ const Contact: FC = () => {
         duration: 0.8,
         ease: "power3.out",
       });
-
       ScrollTrigger.matchMedia({
         "(min-width: 1024px)": function () {
           gsap.from(".map-container", {
@@ -72,7 +71,6 @@ const Contact: FC = () => {
       className="w-full bg-[#F8F5F2] text-[#401d01] flex flex-col lg:h-screen lg:flex-row"
     >
       <div className="w-full lg:w-1/2 flex flex-col justify-between p-8 md:p-12 lg:p-16">
-        {/* Top section with title */}
         <div>
           <div className="contact-block">
             <p className="text-sm uppercase tracking-widest text-[#401d01]/60 font-raleway">
@@ -86,10 +84,7 @@ const Contact: FC = () => {
             </h1>
           </div>
         </div>
-
-        {/* Main content area now uses a grid for better space management */}
         <div className="contact-block grid grid-cols-1 md:grid-cols-2 gap-8 my-8">
-          {/* Location & Hours */}
           <div>
             <h3 className="text-lg font-bold font-raleway tracking-wide mb-4">
               Location & Hours
@@ -112,7 +107,6 @@ const Contact: FC = () => {
                 <p className="font-raleway text-sm text-[#401d01]/70 mt-1">
                   Near Lisie Hospital, 36/121, Ernakulam North, Kerala, 682018
                 </p>
-                {/* ✨ 1. Replaced plain text number with AnimatedContactLink */}
                 <div className="my-1">
                   <AnimatedContactLink href="tel:+919895136837">
                     +91 9895136837
@@ -127,13 +121,12 @@ const Contact: FC = () => {
                   Home Visit
                 </strong>
                 <p className="font-raleway text-sm text-[#401d01]/70 mt-1">
-                  Available on request.
+                  Kannathumuriyil House 36/121 Ernakulam North S.O. Ernakulam
+                  Kerala 682018
                 </p>
               </li>
             </ul>
           </div>
-
-          {/* Get In Touch */}
           <div>
             <h3 className="text-lg font-bold font-raleway tracking-wide mb-4">
               Get In Touch
@@ -148,8 +141,6 @@ const Contact: FC = () => {
             </div>
           </div>
         </div>
-
-        {/* Bottom section with social icons */}
         <div className="contact-block flex items-center gap-6">
           <SocialIcon href="#" aria-label="Instagram">
             <FiInstagram className="h-5 w-5" />
@@ -162,9 +153,8 @@ const Contact: FC = () => {
           </SocialIcon>
         </div>
       </div>
-
-      {/* ✨ 2. Reduced map height on mobile */}
-      <div className="map-container w-full lg:w-1/2 h-[25vh] lg:h-auto">
+      {/* THE FIX IS HERE: Changed h-[25vh] to h-[50vh] for a larger map on mobile */}
+      <div className="map-container w-full lg:w-1/2 h-[50vh] lg:h-auto">
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125743.59378619374!2d76.2425447721516!3d9.97086842918805!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b080d514abec6bf%3A0xbd582caa5844192!2sKochi%2C%20Kerala!5e0!3m2!1sen!2sin!4v1723748281000!5m2!1sen!2sin"
           className="w-full h-full border-0"

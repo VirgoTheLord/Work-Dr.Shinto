@@ -29,15 +29,12 @@ const About = forwardRef<HTMLDivElement, AboutProps>((props, ref) => {
           </div>
 
           <div className="relative z-10 w-full md:w-3/5">
-            {/* ✨ 1. Updated intro text */}
             <p className="text-orange-900 text-sm font-semibold mb-2 font-raleway">
               Meet Dr. Shinto Rajappan, MD (Clinical Oncology)
             </p>
-            {/* ✨ 2. Updated title */}
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold font-braven text-neutral-900 mb-6">
               A Leading Voice in Clinical Oncology
             </h1>
-            {/* ✨ 3. Updated content */}
             <p className="text-neutral-600 leading-relaxed mb-6 font-raleway">
               Dr. Shinto Rajappan is a distinguished{" "}
               <strong>clinical oncologist</strong> dedicated to advancing cancer
