@@ -135,6 +135,7 @@ const Hero = forwardRef<HTMLDivElement, React.PropsWithChildren>(
 
     return (
       <div
+        id="home"
         ref={(node) => {
           if (typeof ref === "function") ref(node);
           else if (ref) ref.current = node;
@@ -162,7 +163,7 @@ const Hero = forwardRef<HTMLDivElement, React.PropsWithChildren>(
             style={{ visibility: "hidden" }}
             className="text-xs sm:text-sm uppercase tracking-widest font-raleway text-white/70"
           >
-            Creative Developer & Designer
+            Clinical Oncologist
           </p>
 
           <h1 className="font-braven text-white text-6xl font-black sm:text-7xl md:text-8xl lg:text-[9vw] leading-tight mt-2">
@@ -189,7 +190,7 @@ const Hero = forwardRef<HTMLDivElement, React.PropsWithChildren>(
             style={{ visibility: "hidden" }}
             className="mt-4 text-base md:text-lg text-white/85"
           >
-            Freelance • Kerala, India
+            Oncologist • Kerala, India
           </p>
 
           <div
@@ -198,10 +199,7 @@ const Hero = forwardRef<HTMLDivElement, React.PropsWithChildren>(
             className="mt-8 flex flex-wrap gap-4"
           >
             <AnimatedButtonWrapper href="#contact" variant="primary">
-              Book a Consult
-            </AnimatedButtonWrapper>
-            <AnimatedButtonWrapper href="#videos" variant="secondary">
-              Watch Videos
+              Contact Me
             </AnimatedButtonWrapper>
           </div>
         </div>

@@ -28,6 +28,9 @@
     --third: #a1887f;
   }
 }
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   background: var(--background);

@@ -8,6 +8,7 @@ type AboutProps = React.ComponentPropsWithoutRef<"div">;
 const About = forwardRef<HTMLDivElement, AboutProps>((props, ref) => {
   return (
     <div
+      id="about"
       ref={ref}
       className="min-h-screen w-full flex flex-col justify-center items-center bg-gray-100  text-neutral-800 py-16 sm:py-20 px-6 md:px-10 overflow-hidden"
     >
@@ -29,7 +30,7 @@ const About = forwardRef<HTMLDivElement, AboutProps>((props, ref) => {
 
           <div className="relative z-10 w-full md:w-3/5">
             <p className="text-orange-900 text-sm font-semibold mb-2 font-raleway">
-              Meet Dr. Shinto Rajappan
+              Meet Dr. Shinto Rajappan, MD
             </p>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold font-braven text-neutral-900 mb-6">
               A Leader in Orthopedic & Joint Replacement Surgery

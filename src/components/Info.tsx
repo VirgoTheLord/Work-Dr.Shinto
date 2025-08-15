@@ -126,11 +126,7 @@ const Info = () => {
   };
 
   return (
-    <ParallaxSection
-      imgAlt="Radiology in Cancer Care"
-      imgSpeed={0.2}
-      id="info-section"
-    >
+    <ParallaxSection imgAlt="Radiology in Cancer Care" imgSpeed={0.2} id="info">
       <div className="flex flex-col min-h-screen">
         <div className="bg-[#e0c7ae]">
           <div className="container mx-auto px-6 text-center py-24">
