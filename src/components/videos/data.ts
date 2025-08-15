@@ -9,7 +9,7 @@ export interface Video {
 
 export const videos: Video[] = [
   {
-    id: "dQw4w9WgXcQ",
+    id: "zOmxcdGupqA",
     title: "Understanding MRI: A Patient's Guide",
     description:
       "A comprehensive look into the MRI procedure, helping you prepare for your scan with confidence.",
@@ -18,7 +18,7 @@ export const videos: Video[] = [
     descriptionColor: "text-stone-600",
   },
   {
-    id: "eFjJ39a4n4Q",
+    id: "XW9nTVvzkvA",
     title: "What to Expect During a CT Scan",
     description:
       "This guide demystifies the CT scan process, from arrival to completion, ensuring you know what to expect.",
@@ -27,7 +27,7 @@ export const videos: Video[] = [
     descriptionColor: "text-stone-300",
   },
   {
-    id: "pGncmT3P0uI",
+    id: "4BMkuiqjhy0",
     title: "The Role of PET-CT in Cancer Staging",
     description:
       "Explore how advanced PET-CT imaging plays a crucial role in accurately staging and managing cancer.",
@@ -36,7 +36,7 @@ export const videos: Video[] = [
     descriptionColor: "text-stone-600",
   },
   {
-    id: "BeygJK_92Ak",
+    id: "hTcT9nCrRW8",
     title: "Introduction to Ultrasound Imaging",
     description:
       "Learn the basics of ultrasound technology and its safe, non-invasive applications in medical diagnostics.",
