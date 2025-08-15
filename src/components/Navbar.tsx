@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { FiMenu, FiX } from "react-icons/fi";
 import MobileNav from "./MobileNav";
@@ -21,13 +21,14 @@ const Navbar = () => {
     { href: "#contact", label: "Contact" },
   ];
 
-  const hideNavbar = () => {
+  // FIX: Wrapped hideNavbar in useCallback to stabilize its reference
+  const hideNavbar = useCallback(() => {
     hideTimeoutRef.current = setTimeout(() => {
       if (!isHoveringRef.current) {
         setIsVisible(false);
       }
     }, 1000);
-  };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,7 +45,7 @@ const Navbar = () => {
       window.removeEventListener("scroll", handleScroll);
       if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
     };
-  }, []);
+  }, [hideNavbar]); // FIX: Added hideNavbar as a dependency
 
   useEffect(() => {
     const sections = navLinks.map((link) => document.querySelector(link.href));
@@ -76,7 +77,7 @@ const Navbar = () => {
         }
       });
     };
-  }, []);
+  }, [navLinks]); // FIX: Added navLinks to the dependency array
 
   const handleMouseEnter = () => {
     isHoveringRef.current = true;

@@ -4,11 +4,17 @@ import React, { useLayoutEffect, useRef, useState, useEffect } from "react";
 import Contact from "./Contact";
 import Footer from "./Footer";
 
-// FIX: Augment the global Window interface to inform TypeScript about GSAP
+// FIX: Define a more specific type for the GSAP object on the window
+// This satisfies the 'no-explicit-any' rule properly.
 declare global {
   interface Window {
-    gsap: any;
-    ScrollTrigger: any;
+    gsap: {
+      registerPlugin: (plugin: any) => void;
+      timeline: (vars?: object) => any;
+      matchMedia: () => any;
+      context: (func: () => void, scope?: React.RefObject<HTMLElement>) => any;
+    };
+    ScrollTrigger: any; // ScrollTrigger can remain 'any' if its type is complex to define
   }
 }
 
@@ -17,13 +23,11 @@ const FooterReveal = () => {
   const contactSectionRef = useRef<HTMLDivElement>(null);
   const [isGsapLoaded, setIsGsapLoaded] = useState(false);
 
-  // Effect to load GSAP and ScrollTrigger from a CDN
   useEffect(() => {
     if (window.gsap) {
       setIsGsapLoaded(true);
       return;
     }
-
     const loadScript = (src: string, onLoad: () => void) => {
       const script = document.createElement("script");
       script.src = src;
@@ -32,7 +36,6 @@ const FooterReveal = () => {
       document.body.appendChild(script);
       return script;
     };
-
     loadScript(
       "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js",
       () => {
@@ -44,7 +47,6 @@ const FooterReveal = () => {
         );
       }
     );
-
     return () => {
       const scripts = document.querySelectorAll('script[src*="gsap"]');
       scripts.forEach((s) => s.parentElement?.removeChild(s));
@@ -54,16 +56,12 @@ const FooterReveal = () => {
   useLayoutEffect(() => {
     if (!isGsapLoaded) return;
 
-    // FIX: No more need for '(window as any)'
     const gsap = window.gsap;
     const ScrollTrigger = window.ScrollTrigger;
     gsap.registerPlugin(ScrollTrigger);
 
-    // Use matchMedia to apply animations only to desktop screens
     const mm = gsap.matchMedia();
-
     mm.add("(min-width: 768px)", () => {
-      // This animation only runs on screens wider than 768px
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
@@ -73,14 +71,12 @@ const FooterReveal = () => {
           pin: true,
         },
       });
-
       tl.to(contactSectionRef.current, {
         y: "-50vh",
         borderRadius: "100px 100px 0 0",
         ease: "power1.out",
       });
     });
-
     return () => mm.revert();
   }, [isGsapLoaded]);
 
