@@ -16,10 +16,10 @@ const About = forwardRef<HTMLDivElement, AboutProps>((props, ref) => {
         <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
           <div className="w-full md:w-2/5 flex-shrink-0">
             <div className="relative">
-              <div className="absolute -bottom-4 -right-4 w-full h-full bg-orange-950 rounded-lg transform translate-x-2 translate-y-2"></div>
+              <div className="absolute -bottom-3 -right-3 w-full h-full bg-orange-950 rounded-lg transform translate-x-2 translate-y-2"></div>
               <div className="relative aspect-square md:aspect-[4/5] rounded-lg overflow-hidden shadow-lg z-10">
                 <Image
-                  src="/1.jpg"
+                  src="/Shintopr.jpg"
                   alt="Dr. Shinto Rajappan"
                   fill
                   className="object-cover"
