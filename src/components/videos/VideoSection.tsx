@@ -22,7 +22,6 @@ const VideosSection: FC = () => {
     const section = sectionRef.current;
     if (!section) return;
 
-    // --- Core Animation Logic (runs on all devices) ---
     const ctx = gsap.context(() => {
       const cards = gsap.utils.toArray<HTMLElement>(".video-card");
       gsap.set(cards[0], { yPercent: 30, scale: 0.8, borderRadius: "20vh" });
@@ -55,7 +54,6 @@ const VideosSection: FC = () => {
       });
     }, section);
 
-    // --- Cursor Logic (runs on desktop/pointer devices ONLY) ---
     const mm = gsap.matchMedia();
     mm.add("(pointer: fine)", () => {
       const moveCursor = (e: MouseEvent) =>
@@ -152,7 +150,6 @@ const VideosSection: FC = () => {
       section.addEventListener("mouseleave", onLeaveSection);
       section.addEventListener("mousemove", onHover);
 
-      // Return a cleanup function for the listeners
       return () => {
         section.removeEventListener("mousemove", moveCursor);
         section.removeEventListener("mouseenter", onEnterSection);
@@ -161,7 +158,6 @@ const VideosSection: FC = () => {
       };
     });
 
-    // Main cleanup function
     return () => {
       ctx.revert();
       mm.revert();

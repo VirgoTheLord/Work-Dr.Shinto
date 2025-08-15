@@ -3,7 +3,6 @@
 import React from "react";
 import Link from "next/link";
 
-// Define the types for the component props
 type ButtonVariant = "primary" | "secondary";
 
 interface CustomButtonProps {

@@ -4,7 +4,6 @@ import { Raleway, Syne } from "next/font/google";
 import { ReactLenis } from "lenis/react";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import PageWrapper from "@/components/PageWrapper";
 import { AnimationProvider } from "@/context/AnimationContext";
 

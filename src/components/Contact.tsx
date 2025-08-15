@@ -1,12 +1,7 @@
 "use client";
 
-import React, { useLayoutEffect, useRef, FC, ReactNode } from "react";
-import {
-  FiInstagram,
-  FiTwitter,
-  FiLinkedin,
-  FiArrowRight,
-} from "react-icons/fi";
+import React, { useLayoutEffect, useRef, FC } from "react";
+import { FiInstagram, FiTwitter, FiLinkedin } from "react-icons/fi";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/all";
@@ -51,7 +46,6 @@ const Contact: FC = () => {
         ease: "power3.out",
       });
 
-      // Animate map only on large screens to avoid layout shift on mobile
       ScrollTrigger.matchMedia({
         "(min-width: 1024px)": function () {
           gsap.from(".map-container", {
@@ -72,14 +66,11 @@ const Contact: FC = () => {
   }, []);
 
   return (
-    // NEW: min-h-screen is now applied ONLY on large screens (lg) and up.
-    // On mobile, the height will fit the content, fixing the overflow.
     <div
       ref={containerRef}
       id="contact"
       className="w-full bg-[#F8F5F2] text-[#401d01] flex flex-col lg:min-h-screen lg:flex-row"
     >
-      {/* Text Content Section - No order classes needed */}
       <div className="w-full lg:w-1/2 flex flex-col justify-center p-8 md:p-16 lg:p-24">
         <div className="contact-block">
           <p className="text-sm uppercase tracking-widest text-[#401d01]/60 font-raleway">
@@ -128,8 +119,6 @@ const Contact: FC = () => {
         </div>
       </div>
 
-      {/* Map Section - No order classes needed */}
-      {/* NEW: Combines mobile-specific height with desktop min-height */}
       <div className="map-container w-full lg:w-1/2 h-[300px] lg:h-auto lg:min-h-screen">
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125743.59378619374!2d76.2425447721516!3d9.97086842918805!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b080d514abec6bf%3A0xbd582caa5844192!2sKochi%2C%20Kerala!5e0!3m2!1sen!2sin!4v1723748281000!5m2!1sen!2sin"

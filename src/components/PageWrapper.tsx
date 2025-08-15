@@ -3,7 +3,7 @@
 import React, { useState, useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import Preloader from "./Preloader";
-import { useAnimationContext } from "@/context/AnimationContext"; // Adjust path if needed
+import { useAnimationContext } from "@/context/AnimationContext";
 
 const PageWrapper = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -45,7 +45,6 @@ const PageWrapper = ({ children }: { children: React.ReactNode }) => {
         duration: 0.8,
         ease: "power2.inOut",
         onComplete: () => {
-          // Unmount the preloader component for cleanup
           setIsLoading(false);
         },
       })
@@ -55,18 +54,15 @@ const PageWrapper = ({ children }: { children: React.ReactNode }) => {
           opacity: 1,
           duration: 0.5,
           onComplete: () => {
-            // Signal that the page is ready for other animations
             setAnimationReady();
           },
         },
         "-=0.5"
       );
-    // ✨ FIX: Added 'setAnimationReady' to the dependency array
   }, [setAnimationReady]);
 
   return (
     <div>
-      {/* Conditionally render preloader so it can be removed from the DOM */}
       {isLoading && <Preloader />}
       <main ref={mainContentRef} className="hide-main-content">
         {children}

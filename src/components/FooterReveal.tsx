@@ -18,7 +18,6 @@ const FooterReveal = () => {
         scrollTrigger: {
           trigger: containerRef.current,
           start: "bottom bottom",
-          // NEW: Animation completes over a shorter scroll distance (50% of viewport height).
           end: "+=50%",
           scrub: 1,
           pin: true,
@@ -27,7 +26,6 @@ const FooterReveal = () => {
 
       tl.to(contactSectionRef.current, {
         y: "-50vh",
-        // NEW: Increased the border radius for a more visible curve.
         borderRadius: "100px 100px 0 0",
         ease: "power1.out",
       });
@@ -37,7 +35,6 @@ const FooterReveal = () => {
   }, []);
 
   return (
-    // NEW: Reduced the container height for a shorter, snappier scroll animation.
     <div ref={containerRef} className="relative h-[150vh] w-full bg-[#F8F5F2]">
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         <div className="absolute bottom-0 left-0 h-[50vh] w-full">

@@ -1,4 +1,3 @@
-import Contact from "@/components/Contact";
 import FooterReveal from "@/components/FooterReveal";
 import HeroAboutTransition from "@/components/HeroTransition";
 import Info from "@/components/Info";

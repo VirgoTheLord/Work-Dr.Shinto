@@ -39,8 +39,8 @@ const About = forwardRef<HTMLDivElement, AboutProps>((props, ref) => {
               <strong>orthopedic surgeon</strong> specializing in advanced{" "}
               <strong>joint replacement</strong> and{" "}
               <strong>arthroscopic surgery</strong>. With extensive training,
-              including D'Ortho, DNB, and an Mch in Orthopedics, he brings a
-              wealth of knowledge to his practice.
+              including D&apos;Ortho, DNB, and an Mch in Orthopedics, he brings
+              a wealth of knowledge to his practice.
             </p>
             <p className="text-neutral-600 leading-relaxed font-raleway">
               His approach combines cutting-edge surgical techniques with a deep

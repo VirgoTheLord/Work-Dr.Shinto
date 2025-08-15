@@ -18,9 +18,6 @@ gsap.registerPlugin(SplitText);
 const images = ["/1.jpg", "/2.jpg", "/3.jpg", "/4.jpg"];
 const FIRST_NAME = "Dr. Shinto";
 const LAST_NAME = "Rajappan.";
-
-// ✨ FIX: Changed React.PropsWithChildren<{}> to React.PropsWithChildren
-// This resolves the '@typescript-eslint/no-empty-object-type' error.
 const Hero = forwardRef<HTMLDivElement, React.PropsWithChildren>(
   (props, ref) => {
     const { isAnimationReady } = useAnimationContext();
@@ -33,7 +30,6 @@ const Hero = forwardRef<HTMLDivElement, React.PropsWithChildren>(
     const firstNameRef = useRef<HTMLSpanElement | null>(null);
     const lastNameRef = useRef<HTMLSpanElement | null>(null);
 
-    // Preload images + rotate
     useEffect(() => {
       images.forEach((src) => {
         const img = new window.Image();
@@ -46,7 +42,6 @@ const Hero = forwardRef<HTMLDivElement, React.PropsWithChildren>(
       return () => clearInterval(interval);
     }, []);
 
-    // Crossfade background images
     useEffect(() => {
       gsap.to(".carousel-image", {
         autoAlpha: (i: number) => (i === currentImageIndex ? 1 : 0),
@@ -55,7 +50,6 @@ const Hero = forwardRef<HTMLDivElement, React.PropsWithChildren>(
       });
     }, [currentImageIndex]);
 
-    // Hero text animation
     useLayoutEffect(() => {
       if (
         !isAnimationReady ||
@@ -76,12 +70,10 @@ const Hero = forwardRef<HTMLDivElement, React.PropsWithChildren>(
           type: "chars",
         });
 
-        // Set overflow hidden on parents for the clipping mask effect.
         gsap.set([firstNameRef.current, lastNameRef.current], {
           overflow: "hidden",
         });
 
-        // Set the initial state of the characters to be ABOVE the viewport.
         gsap.set([splitFirstName.chars, splitLastName.chars], {
           yPercent: -100,
           autoAlpha: 0,
@@ -150,7 +142,6 @@ const Hero = forwardRef<HTMLDivElement, React.PropsWithChildren>(
         }}
         className="min-h-screen relative w-full flex flex-col justify-center items-start px-6 md:px-10 pt-20 pb-32 sm:py-20"
       >
-        {/* background carousel */}
         <div className="absolute inset-0 z-0">
           {images.map((src, index) => (
             <Image
@@ -165,7 +156,6 @@ const Hero = forwardRef<HTMLDivElement, React.PropsWithChildren>(
           <div className="absolute inset-0 bg-black/40" />
         </div>
 
-        {/* foreground */}
         <div className="relative z-10 w-full font-raleway">
           <p
             ref={subtitleRef}

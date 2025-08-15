@@ -8,19 +8,18 @@ const lerp = (start: number, end: number, factor: number) =>
   start + (end - start) * factor;
 
 interface ParallaxImageProps {
-  src?: string; // Made optional
+  src?: string;
   alt: string;
   speed?: number;
-  bgColor?: string; // New prop for background color
+  bgColor?: string;
 }
 
 const ParallaxImage: React.FC<ParallaxImageProps> = ({
   src,
   alt,
   speed = 0.2,
-  bgColor = "transparent", // Default color if none is provided
+  bgColor = "transparent",
 }) => {
-  // Separate refs for Image and Div
   const imageRef = useRef<HTMLImageElement | null>(null);
   const divRef = useRef<HTMLDivElement | null>(null);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
@@ -76,7 +75,6 @@ const ParallaxImage: React.FC<ParallaxImageProps> = ({
   return (
     <div ref={wrapperRef} className="relative w-full h-full overflow-hidden">
       {src ? (
-        // If 'src' exists, render the Image
         <Image
           ref={imageRef}
           src={src}
@@ -86,7 +84,6 @@ const ParallaxImage: React.FC<ParallaxImageProps> = ({
           style={{ transform: "translateY(0) scale(1.2)" }}
         />
       ) : (
-        // Otherwise, render a colored Div
         <div
           ref={divRef}
           className="w-full h-full will-change-transform"
@@ -94,7 +91,6 @@ const ParallaxImage: React.FC<ParallaxImageProps> = ({
             backgroundColor: bgColor,
             transform: "translateY(0) scale(1.2)",
           }}
-          // The 'alt' prop is used for an ARIA label for accessibility
           role="img"
           aria-label={alt}
         />

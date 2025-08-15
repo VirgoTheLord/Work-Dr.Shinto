@@ -1,4 +1,3 @@
-// --- Type Definition (with specific description color) ---
 export interface Video {
   id: string;
   title: string;

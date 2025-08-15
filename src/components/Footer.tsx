@@ -1,10 +1,9 @@
 "use client";
 
-import React, { useRef, useLayoutEffect, FC, ReactNode } from "react";
-import { FiMail, FiPhone, FiArrowUp } from "react-icons/fi";
+import React, { useRef, useLayoutEffect } from "react";
+import { FiArrowUp } from "react-icons/fi";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import AnimatedContactLink from "./AnimatedContactLink"; // Ensure this is imported
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,7 +17,6 @@ const Footer = () => {
   const iconColorTween = useRef<gsap.core.Tween | null>(null);
 
   useLayoutEffect(() => {
-    // Main safety check: Don't run any GSAP code if the footer isn't rendered yet.
     if (!footerRef.current) return;
 
     const ctx = gsap.context(() => {

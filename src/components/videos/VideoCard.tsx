@@ -1,6 +1,7 @@
 "use client";
 
 import React, { FC, memo } from "react";
+import Image from "next/image";
 import { Video } from "./data";
 
 interface VideoCardProps {
@@ -19,10 +20,8 @@ const VideoCard: FC<VideoCardProps> = ({ video, onSelect }) => {
       aria-label={`Select video: ${video.title}`}
       className="video-card pointer-events-auto w-full h-full flex items-center justify-center md:cursor-none overflow-hidden"
     >
-      {/* Background Layer */}
       <div className={`w-full h-full absolute inset-0 ${video.bgColor}`} />
 
-      {/* Content Layer (with z-index fix) */}
       <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-12 w-full max-w-6xl px-8">
         <div className="w-full md:w-5/12 text-center md:text-left">
           <h3
@@ -39,13 +38,14 @@ const VideoCard: FC<VideoCardProps> = ({ video, onSelect }) => {
 
         <div className="w-full md:w-7/12">
           <div className="video-thumbnail-area relative w-full aspect-video rounded-2xl overflow-hidden shadow-xl group">
-            <img
+            <Image
               src={thumbnailUrl}
               alt={video.title}
+              fill
               onError={(e) => {
                 e.currentTarget.src = `https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`;
               }}
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
             />
           </div>
         </div>

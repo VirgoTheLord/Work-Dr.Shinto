@@ -9,8 +9,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-first: #000000; /* Deep Forest Green */
-  --color-third: #e3ffe5; /* Vibrant Leafy Green */
+  --color-first: #000000;
+  --color-third: #e3ffe5;
   --color-second: #045700;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -23,8 +23,8 @@
   :root {
     --background: #f6f6f6;
     --foreground: #ededed;
-    --first: #6d4c41; /* Mid-Brown */
-    --second: #8d6e63; /* Lighter Brown */
+    --first: #6d4c41;
+    --second: #8d6e63;
     --third: #a1887f;
   }
 }
