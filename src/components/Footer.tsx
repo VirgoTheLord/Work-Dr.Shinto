@@ -2,10 +2,13 @@
 
 import React, { useRef, useLayoutEffect } from "react";
 
-// GSAP and ScrollTrigger are now expected to be on the window object
+// Note: GSAP and ScrollTrigger are not imported directly.
+// They are loaded by the parent component and accessed via the window object.
 declare global {
   interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     gsap: any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ScrollTrigger: any;
   }
 }
@@ -38,12 +41,12 @@ const Footer = () => {
         .from(".footer-desc", {}, "-=0.6")
         .from(".footer-arrow", {}, "-=0.6");
 
-      // This trigger plays the timeline
+      // This trigger plays the content animation timeline
       ScrollTrigger.create({
         trigger: footerRef.current,
-        start: "top 80%", // Animate when 80% of the footer is visible
+        start: "top 80%",
         onEnter: () => tl.play(),
-        onLeaveBack: () => tl.reverse(), // Reverse animation on scroll up
+        onLeaveBack: () => tl.reverse(),
       });
 
       // This timeline handles the hover effect on the arrow
@@ -73,7 +76,6 @@ const Footer = () => {
   const handleArrowMouseEnter = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (typeof window.gsap === "undefined") return;
     const gsap = window.gsap;
-
     arrowHoverTl.current?.play();
     gsap.to(e.currentTarget, { borderColor: "transparent", duration: 0.3 });
     bgHoverTween.current = gsap.to(arrowBgRef.current, {
@@ -101,7 +103,6 @@ const Footer = () => {
   const handleArrowMouseLeave = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (typeof window.gsap === "undefined") return;
     const gsap = window.gsap;
-
     arrowHoverTl.current?.reverse();
     gsap.to(e.currentTarget, { borderColor: "#F8F5F2", duration: 0.3 });
     bgHoverTween.current?.kill();
@@ -127,7 +128,6 @@ const Footer = () => {
             Committed to providing expert clinical Oncological insights.
           </p>
         </div>
-
         <a
           href="#top"
           onClick={handleBackToTop}
@@ -139,7 +139,6 @@ const Footer = () => {
           <span ref={arrowBgRef} className="absolute inset-0 z-0" />
           <span ref={arrowRef} className="relative z-10 block">
             <span ref={arrowIconRef}>
-              {/* Replaced FiArrowUp with an inline SVG to remove dependency */}
               <svg
                 stroke="currentColor"
                 fill="none"
@@ -159,7 +158,6 @@ const Footer = () => {
           </span>
         </a>
       </div>
-
       <p className="absolute bottom-4 left-0 right-0 text-center font-raleway text-xs opacity-50">
         &copy; {new Date().getFullYear()} Dr. Shinto Rajappan. All rights
         reserved.
