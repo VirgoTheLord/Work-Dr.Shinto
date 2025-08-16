@@ -10,9 +10,9 @@ export interface Video {
 export const videos: Video[] = [
   {
     id: "zOmxcdGupqA",
-    title: "What is Chemotherapy?",
+    title: "Cancer? What now?",
     description:
-      "An overview of chemotherapy, explaining how it works to treat cancer and what patients can typically expect during treatment.",
+      "An overview of what must a patient understand and keep in mind.",
     bgColor: "bg-[#e0c7ae]",
     textColor: "text-[#401d01]",
     descriptionColor: "text-stone-600",
@@ -28,18 +28,18 @@ export const videos: Video[] = [
   },
   {
     id: "4BMkuiqjhy0",
-    title: "Understanding Immunotherapy",
+    title: "Chemotherapy Without Hair-Fall",
     description:
-      "Discover how immunotherapy harnesses the body's own immune system to fight cancer, marking a major advancement in treatment.",
+      "Discover how chemotherapy is be done without hair-fall and facts and myths about chemotherapy.",
     bgColor: "bg-[#e0c7ae]",
     textColor: "text-[#401d01]",
     descriptionColor: "text-stone-600",
   },
   {
     id: "hTcT9nCrRW8",
-    title: "Targeted Therapy for Cancer",
+    title: "Symptoms Of Blood Cancer",
     description:
-      "An introduction to targeted therapy, which uses drugs to identify and attack specific cancer cells with less harm to normal cells.",
+      "What are the signs and symptoms of blood cancer, hoe does it affect children.",
     bgColor: "bg-[#401d01]",
     textColor: "text-white",
     descriptionColor: "text-stone-300",

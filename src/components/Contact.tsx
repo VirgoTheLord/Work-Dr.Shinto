@@ -95,10 +95,14 @@ const Contact: FC = () => {
                   Online Booking
                 </strong>
                 <p className="font-raleway text-sm text-[#401d01]/70 mt-1">
-                  Mon - Fri, 9 AM - 5 PM
+                  Mon - Sat, 5 PM - 9 PM
                   <br />
-                  Sun, 9 AM - 8 PM
+                  Sun, 10:30 AM - 8 PM
                 </p>
+                <AnimatedContactLink href="tel:+919778463227">
+                  +91 97784 63227
+                </AnimatedContactLink>
+                <div>(Whatsapp or call)</div>
               </li>
               <li>
                 <strong className="font-bold font-raleway text-sm text-[#401d01]">
@@ -134,9 +138,6 @@ const Contact: FC = () => {
             <div className="flex flex-col items-start">
               <AnimatedContactLink href="mailto:drshintopr@gmail.com">
                 drshintopr@gmail.com
-              </AnimatedContactLink>
-              <AnimatedContactLink href="tel:+919778463227">
-                +91 97784 63227
               </AnimatedContactLink>
             </div>
           </div>

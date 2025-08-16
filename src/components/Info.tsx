@@ -8,27 +8,27 @@ import ParallaxSection from "./ParallaxSection";
 
 const cardData = [
   {
-    title: "Understanding Radiology",
+    title: "Understanding Clinical Oncology",
     content:
-      "Radiology uses medical imaging technologies like X-rays, CT scans, MRIs, and ultrasound to diagnose and treat diseases. It is a fundamental part of modern medicine, providing detailed views inside the human body.",
+      "Clinical oncology is a medical specialty focused on treating cancer using non-surgical methods, primarily radiotherapy and systemic therapies like chemotherapy. It involves the use of radiation and drugs to target and destroy cancer cells, aiming to halt or eliminate the disease.",
     image: "/1.jpg",
   },
   {
     title: "Screening & Early Detection",
     content:
-      "Utilizing advanced imaging like mammography, low-dose CT, and ultrasound allows us to detect cancers at their earliest, most treatable stages, often before symptoms even develop. This proactive approach is fundamental to improving patient outcomes.",
+      "Cancer screening and early detection involve using tests to find cancer in people who don't yet have symptoms, with the goal of increasing chances of successful treatment. Early detection is crucial because treatment is often more effective when cancer is found in its early stages.",
     image: "/2.jpg",
   },
   {
     title: "Diagnosis & Staging",
     content:
-      "When a concern arises, precision is key. CT, MRI, and PET-CT scans provide a detailed roadmap, helping us clarify the cancer's type, size, location, and stage, which is absolutely critical for creating an effective, personalized treatment plan.",
+      "In oncology, diagnosis and staging are crucial processes that help determine the presence of cancer and its extent, guiding treatment decisions and prognosis. Diagnosis involves identifying cancer cells through various tests, while staging describes the cancer's spread.",
     image: "/3.jpg",
   },
   {
-    title: "Treatment Guidance",
+    title: "Treatment",
     content:
-      "Modern radiology is not just for diagnosis; it's an active part of treatment. We use imaging to guide precise, minimally invasive procedures like targeted biopsies, tumor ablations, and the placement of treatment ports, minimizing impact on the patient.",
+      "Clinical oncology focuses on treating cancer with therapies that are not surgical, including chemotherapy, radiation therapy, and newer approaches like immunotherapy and targeted therapy. These treatments are often used in conjunction with surgery or as the primary treatment for certain cancers. Clinical oncologists work with other specialists to develop and implement comprehensive cancer treatment plans.",
     image: "/4.jpg",
   },
 ];

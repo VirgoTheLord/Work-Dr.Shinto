@@ -47,7 +47,7 @@ const AnimatedContactLink: FC<AnimatedContactLinkProps> = ({
   return (
     <a
       href={href}
-      className="font-syne relative block text-md font-medium transition-colors hover:text-black py-1"
+      className="font-sans relative block text-md font-medium transition-colors hover:text-black py-1"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >

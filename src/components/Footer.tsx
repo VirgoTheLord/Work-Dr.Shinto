@@ -107,7 +107,7 @@ const Footer = () => {
             Dr. Shinto Rajappan.
           </h2>
           <p className="footer-desc font-raleway text-md opacity-70 mt-2">
-            Committed to providing expert radiological insights.
+            Committed to providing expert clinical Oncological insights.
           </p>
         </div>
         <a
