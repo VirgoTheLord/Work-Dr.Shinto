@@ -10,6 +10,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const HeroAboutTransition = () => {
   const containerRef = useRef(null);
+  // heroRef is not used in the animation, but is kept for component structure
   const heroRef = useRef(null);
   const aboutRef = useRef(null);
 
@@ -19,6 +20,8 @@ const HeroAboutTransition = () => {
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
+          // The end value "+=100%" dynamically calculates based on the trigger's height.
+          // On mobile, this will be 135vh of scroll. On desktop, 100vh.
           end: "+=100%",
           scrub: 1,
           pin: true,
@@ -30,12 +33,10 @@ const HeroAboutTransition = () => {
         {
           yPercent: 100,
           scale: 0.8,
-          borderRadius: "0px",
         },
         {
           yPercent: 0,
           scale: 1,
-          borderRadius: "0px",
           ease: "power1.inOut",
         }
       );
@@ -47,7 +48,10 @@ const HeroAboutTransition = () => {
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-[125vh] overflow-hidden"
+      // This is the key change for responsiveness.
+      // Default height is 135vh (mobile-first).
+      // On medium screens (md: 768px) and up, the height becomes 100vh (h-screen).
+      className="relative w-full h-[135vh] md:h-screen overflow-hidden"
     >
       <div ref={heroRef} className="w-full h-full">
         <Hero />
