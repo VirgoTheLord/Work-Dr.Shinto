@@ -1,12 +1,10 @@
 "use client";
 
 import React, { useLayoutEffect, useRef, FC } from "react";
-import { FiInstagram, FiTwitter, FiLinkedin } from "react-icons/fi";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { SplitText } from "gsap/all";
+import { SplitText } from "gsap/SplitText"; // requires gsap-trial or splittext plugin
 import AnimatedContactLink from "./AnimatedContactLink";
-import SocialIcon from "./SocialIcon";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -15,11 +13,11 @@ const Contact: FC = () => {
   const titleRef = useRef<HTMLHeadingElement>(null);
 
   useLayoutEffect(() => {
-    // GSAP animations remain the same
     const ctx = gsap.context(() => {
       if (titleRef.current) {
-        const split = SplitText.create(titleRef.current, { type: "chars" });
+        const split = new SplitText(titleRef.current, { type: "chars" });
         gsap.set(titleRef.current, { overflow: "hidden" });
+
         gsap.from(split.chars, {
           scrollTrigger: {
             trigger: containerRef.current,
@@ -33,6 +31,7 @@ const Contact: FC = () => {
           ease: "power3.out",
         });
       }
+
       gsap.from(".contact-block", {
         scrollTrigger: {
           trigger: containerRef.current,
@@ -45,8 +44,9 @@ const Contact: FC = () => {
         duration: 0.8,
         ease: "power3.out",
       });
+
       ScrollTrigger.matchMedia({
-        "(min-width: 1024px)": function () {
+        "(min-width: 1024px)": () => {
           gsap.from(".map-container", {
             scrollTrigger: {
               trigger: containerRef.current,
@@ -59,8 +59,22 @@ const Contact: FC = () => {
             ease: "power3.out",
           });
         },
+        "(max-width: 1023px)": () => {
+          gsap.from(".map-container", {
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top 80%",
+              toggleActions: "play none none reverse",
+            },
+            scale: 0.95,
+            opacity: 0,
+            duration: 0.8,
+            ease: "power3.out",
+          });
+        },
       });
     }, containerRef);
+
     return () => ctx.revert();
   }, []);
 
@@ -70,6 +84,7 @@ const Contact: FC = () => {
       id="contact"
       className="w-full bg-[#F8F5F2] text-[#401d01] flex flex-col lg:h-screen lg:flex-row"
     >
+      {/* Left content */}
       <div className="w-full lg:w-1/2 flex flex-col justify-between p-8 md:p-12 lg:p-16">
         <div>
           <div className="contact-block">
@@ -78,12 +93,13 @@ const Contact: FC = () => {
             </p>
             <h1
               ref={titleRef}
-              className="text-6xl md:text-8xl font-black font-braven leading-tight mt-2 whitespace-nowrap"
+              className="text-5xl md:text-7xl lg:text-8xl font-black font-braven leading-tight mt-2 whitespace-normal"
             >
               Dr. Shinto
             </h1>
           </div>
         </div>
+
         <div className="contact-block grid grid-cols-1 md:grid-cols-2 gap-8 my-8">
           <div>
             <h3 className="text-lg font-bold font-raleway tracking-wide mb-4">
@@ -95,9 +111,7 @@ const Contact: FC = () => {
                   Online Booking
                 </strong>
                 <p className="font-raleway text-sm text-[#401d01]/70 mt-1">
-                  Mon - Sat, 5 PM - 9 PM
-                  <br />
-                  Sun, 10:30 AM - 8 PM
+                  Mon - Sat, 5 PM - 9 PM <br /> Sun, 10:30 AM - 8 PM
                 </p>
                 <AnimatedContactLink href="tel:+919778463227">
                   +91 97784 63227
@@ -111,12 +125,10 @@ const Contact: FC = () => {
                 <p className="font-raleway text-sm text-[#401d01]/70 mt-1">
                   Near Lisie Hospital, 36/121, Ernakulam North, Kerala, 682018
                 </p>
-                <div className="my-1">
-                  <AnimatedContactLink href="tel:+919895136837">
-                    +91 9895136837
-                  </AnimatedContactLink>
-                </div>
-                <p className="font-raleway text-sm text-[#401d01]/70">
+                <AnimatedContactLink href="tel:+919895136837">
+                  +91 9895136837
+                </AnimatedContactLink>
+                <p className="font-raleway text-sm text-[#401d01]/70 mt-1">
                   Mon - Fri, 9 AM - 1:30 PM
                 </p>
               </li>
@@ -125,7 +137,8 @@ const Contact: FC = () => {
                   Home Visit
                 </strong>
                 <p className="font-raleway text-sm text-[#401d01]/70 mt-1">
-                  House visit can be arranged for patients, by prior appointment.
+                  House visit can be arranged for patients, by prior
+                  appointment.
                 </p>
                 <AnimatedContactLink href="tel:+919778463227">
                   +91 97784 63227
@@ -133,6 +146,7 @@ const Contact: FC = () => {
               </li>
             </ul>
           </div>
+
           <div>
             <h3 className="text-lg font-bold font-raleway tracking-wide mb-4">
               Get In Touch
@@ -144,20 +158,10 @@ const Contact: FC = () => {
             </div>
           </div>
         </div>
-        <div className="contact-block flex items-center gap-6">
-          <SocialIcon href="#" aria-label="Instagram">
-            <FiInstagram className="h-5 w-5" />
-          </SocialIcon>
-          <SocialIcon href="#" aria-label="Twitter">
-            <FiTwitter className="h-5 w-5" />
-          </SocialIcon>
-          <SocialIcon href="#" aria-label="LinkedIn">
-            <FiLinkedin className="h-5 w-5" />
-          </SocialIcon>
-        </div>
       </div>
-      {/* THE FIX IS HERE: Changed h-[25vh] to h-[50vh] for a larger map on mobile */}
-      <div className="map-container w-full lg:w-1/2 h-[50vh] lg:h-auto">
+
+      {/* Map */}
+      <div className="map-container w-full lg:w-1/2 h-[50vh] md:min-h-[40vh] lg:h-auto">
         <iframe
           src="https://www.google.com/maps/embed/v1/place?key=AIzaSyB2NIWI3Tv9iDPrlnowr_0ZqZWoAQydKJU&q=X7PQ%2BMMP%20Kochi%2C%20Kerala%2C%20India&maptype=roadmap"
           className="w-full h-full border-0"

@@ -1,11 +1,14 @@
 "use client";
 
 import React, { useRef, useLayoutEffect } from "react";
-import { FiArrowUp } from "react-icons/fi";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger);
+// GSAP and ScrollTrigger are now expected to be on the window object
+declare global {
+  interface Window {
+    gsap: any;
+    ScrollTrigger: any;
+  }
+}
 
 const Footer = () => {
   const footerRef = useRef<HTMLDivElement>(null);
@@ -17,22 +20,33 @@ const Footer = () => {
   const iconColorTween = useRef<gsap.core.Tween | null>(null);
 
   useLayoutEffect(() => {
-    // GSAP animations remain the same
-    if (!footerRef.current) return;
+    // Guard clause to ensure GSAP is loaded before running animations
+    if (!footerRef.current || typeof window.gsap === "undefined") return;
+
+    const gsap = window.gsap;
+    const ScrollTrigger = window.ScrollTrigger;
+
+    // This context ensures all GSAP animations are properly cleaned up
     const ctx = gsap.context(() => {
+      // This timeline animates the footer content when it scrolls into view
       const tl = gsap.timeline({
         paused: true,
         defaults: { opacity: 0, y: 30, ease: "power3.out", duration: 0.8 },
       });
+
       tl.from(".footer-title", {})
         .from(".footer-desc", {}, "-=0.6")
         .from(".footer-arrow", {}, "-=0.6");
+
+      // This trigger plays the timeline
       ScrollTrigger.create({
         trigger: footerRef.current,
-        start: "top 80%",
+        start: "top 80%", // Animate when 80% of the footer is visible
         onEnter: () => tl.play(),
-        onLeaveBack: () => tl.reverse(),
+        onLeaveBack: () => tl.reverse(), // Reverse animation on scroll up
       });
+
+      // This timeline handles the hover effect on the arrow
       arrowHoverTl.current = gsap
         .timeline({ paused: true, reversed: true })
         .to(arrowRef.current, {
@@ -47,18 +61,19 @@ const Footer = () => {
           ease: "power2.out",
         });
     }, footerRef);
-    return () => ctx.revert();
+
+    return () => ctx.revert(); // Cleanup function
   }, []);
 
   const handleBackToTop = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleArrowMouseEnter = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (typeof window.gsap === "undefined") return;
+    const gsap = window.gsap;
+
     arrowHoverTl.current?.play();
     gsap.to(e.currentTarget, { borderColor: "transparent", duration: 0.3 });
     bgHoverTween.current = gsap.to(arrowBgRef.current, {
@@ -84,6 +99,9 @@ const Footer = () => {
   };
 
   const handleArrowMouseLeave = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (typeof window.gsap === "undefined") return;
+    const gsap = window.gsap;
+
     arrowHoverTl.current?.reverse();
     gsap.to(e.currentTarget, { borderColor: "#F8F5F2", duration: 0.3 });
     bgHoverTween.current?.kill();
@@ -98,8 +116,7 @@ const Footer = () => {
   return (
     <footer
       ref={footerRef}
-      // THE FIX IS HERE: Added responsive padding to increase height on mobile
-      className="h-full w-full bg-[#401d01] text-[#F8F5F2] flex items-center justify-center py-24 md:py-8 px-8 overflow-hidden"
+      className="relative h-full w-full bg-[#401d01] text-[#F8F5F2] flex items-center justify-center py-24 md:py-16 px-8 overflow-hidden"
     >
       <div className="w-full max-w-7xl flex flex-col md:flex-row items-center justify-between gap-8">
         <div className="text-center md:text-left">
@@ -110,6 +127,7 @@ const Footer = () => {
             Committed to providing expert clinical Oncological insights.
           </p>
         </div>
+
         <a
           href="#top"
           onClick={handleBackToTop}
@@ -118,18 +136,30 @@ const Footer = () => {
           className="footer-arrow group relative h-14 w-14 flex-shrink-0 flex items-center justify-center border-2 border-[#F8F5F2]/30 text-[#F8F5F2]/70 transition-colors duration-300 hover:text-white"
           aria-label="Back to Top"
         >
-          <span
-            ref={arrowBgRef}
-            className="absolute inset-0 z-0"
-            style={{ backgroundColor: "transparent" }}
-          ></span>
+          <span ref={arrowBgRef} className="absolute inset-0 z-0" />
           <span ref={arrowRef} className="relative z-10 block">
             <span ref={arrowIconRef}>
-              <FiArrowUp className="h-6 w-6" />
+              {/* Replaced FiArrowUp with an inline SVG to remove dependency */}
+              <svg
+                stroke="currentColor"
+                fill="none"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-6 w-6"
+                height="1em"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <line x1="12" y1="19" x2="12" y2="5"></line>
+                <polyline points="5 12 12 5 19 12"></polyline>
+              </svg>
             </span>
           </span>
         </a>
       </div>
+
       <p className="absolute bottom-4 left-0 right-0 text-center font-raleway text-xs opacity-50">
         &copy; {new Date().getFullYear()} Dr. Shinto Rajappan. All rights
         reserved.

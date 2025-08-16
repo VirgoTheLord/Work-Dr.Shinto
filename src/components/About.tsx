@@ -10,7 +10,7 @@ const About = forwardRef<HTMLDivElement, AboutProps>((props, ref) => {
     <div
       id="about"
       ref={ref}
-      className="min-h-screen w-full flex flex-col justify-center items-center bg-gray-100  text-neutral-800 sm:py-20 px-6 md:px-10 overflow-hidden"
+      className="min-h-screen w-full flex flex-col justify-center items-center bg-gray-100 pt-8 text-neutral-800 sm:py-20 px-6 md:px-10 overflow-hidden"
     >
       <div className="max-w-5xl w-full">
         <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
@@ -47,8 +47,8 @@ const About = forwardRef<HTMLDivElement, AboutProps>((props, ref) => {
               .
             </p>
             <p className="text-neutral-600 leading-relaxed font-raleway">
-              A respected <strong>Fellow of AROI and IMA</strong>, Dr. Shinto Rajappan
-              is deeply involved in the academic community. He has{" "}
+              A respected <strong>Fellow of AROI and IMA</strong>, Dr. Shinto
+              Rajappan is deeply involved in the academic community. He has{" "}
               <strong>co-published research papers</strong> and is a highly
               regarded orator, frequently invited to give lectures at seminars
               and conferences, sharing his expertise and passion for improving

@@ -1,31 +1,23 @@
 "use client";
 
-import React, { useLayoutEffect, useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Contact from "./Contact";
 import Footer from "./Footer";
 
-// FIX: Added more specific types for GSAP to satisfy the linter
-declare global {
-  interface Window {
-    gsap: {
-      registerPlugin(...plugins: object[]): void;
-      timeline(vars?: gsap.TimelineVars): gsap.core.Timeline;
-      matchMedia(): gsap.MatchMedia;
-    };
-    ScrollTrigger: object;
-  }
-}
-
-const FooterReveal = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const contactSectionRef = useRef<HTMLDivElement>(null);
-  const [isGsapLoaded, setIsGsapLoaded] = useState(false);
+/**
+ * This component now acts as a simple layout wrapper for the Contact and Footer sections.
+ * It also handles loading the GSAP library from a CDN to make it available to child components.
+ */
+const ContactFooterSection = () => {
+  const [areScriptsLoaded, setAreScriptsLoaded] = useState(false);
 
   useEffect(() => {
-    if (window.gsap) {
-      setIsGsapLoaded(true);
+    // Check if GSAP is already available
+    if (window.gsap && window.ScrollTrigger) {
+      setAreScriptsLoaded(true);
       return;
     }
+
     const loadScript = (src: string, onLoad: () => void) => {
       const script = document.createElement("script");
       script.src = src;
@@ -34,65 +26,36 @@ const FooterReveal = () => {
       document.body.appendChild(script);
       return script;
     };
+
+    // Load GSAP, then ScrollTrigger
     loadScript(
       "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js",
       () => {
         loadScript(
           "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js",
           () => {
-            setIsGsapLoaded(true);
+            // Ensure the plugin is registered globally
+            window.gsap.registerPlugin(window.ScrollTrigger);
+            setAreScriptsLoaded(true);
           }
         );
       }
     );
+
+    // Basic cleanup
     return () => {
       const scripts = document.querySelectorAll('script[src*="gsap"]');
       scripts.forEach((s) => s.parentElement?.removeChild(s));
     };
   }, []);
 
-  useLayoutEffect(() => {
-    if (!isGsapLoaded) return;
-
-    const gsap = window.gsap;
-    const ScrollTrigger = window.ScrollTrigger;
-    gsap.registerPlugin(ScrollTrigger);
-
-    const mm = gsap.matchMedia();
-    mm.add("(min-width: 768px)", () => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "bottom bottom",
-          end: "+=50%",
-          scrub: 1,
-          pin: true,
-        },
-      });
-      tl.to(contactSectionRef.current, {
-        y: "-50vh",
-        borderRadius: "100px 100px 0 0",
-        ease: "power1.out",
-      });
-    });
-    return () => mm.revert();
-  }, [isGsapLoaded]);
-
+  // Render children only after scripts are loaded to prevent errors
   return (
-    <div ref={containerRef} className="w-full bg-[#F8F5F2]">
-      <div className="relative lg:sticky top-0 lg:h-screen w-full lg:overflow-hidden">
-        <div
-          ref={contactSectionRef}
-          className="relative z-20 w-full bg-[#F8F5F2]"
-        >
-          <Contact />
-        </div>
-        <div className="relative lg:absolute bottom-0 left-0 z-10 w-full lg:h-[50vh]">
-          <Footer />
-        </div>
-      </div>
+    <div className="bg-[#F8F5F2]">
+      <Contact />
+      {areScriptsLoaded ? <Footer /> : <div>Loading Footer...</div>}
     </div>
   );
 };
 
-export default FooterReveal;
+export default ContactFooterSection;
