@@ -125,9 +125,11 @@ const Contact: FC = () => {
                   Home Visit
                 </strong>
                 <p className="font-raleway text-sm text-[#401d01]/70 mt-1">
-                  Kannathumuriyil House 36/121 Ernakulam North S.O. Ernakulam
-                  Kerala 682018
+                  House visit can be arranged for patients, by prior appointment.
                 </p>
+                <AnimatedContactLink href="tel:+919778463227">
+                  +91 97784 63227
+                </AnimatedContactLink>
               </li>
             </ul>
           </div>
