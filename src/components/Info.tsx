@@ -126,16 +126,15 @@ const Info = () => {
   };
 
   return (
-    <ParallaxSection imgAlt="Radiology in Cancer Care" imgSpeed={0.2} id="info">
+    <ParallaxSection imgAlt="Oncology in Cancer Care" imgSpeed={0.2} id="info">
       <div className="flex flex-col min-h-screen">
         <div className="bg-[#401d01]">
           <div className="container mx-auto px-6 text-center py-24">
             <h1 className="text-4xl md:text-6xl font-bold font-braven text-white">
-              The Role of Radiology in Cancer Care
+              The Role of Oncology in Cancer Care
             </h1>
             <p className="mt-4 text-lg text-shadow-white max-w-2xl mx-auto font-raleway">
-              From early detection to post-treatment follow-up, medical imaging
-              is an essential partner in the fight against cancer.
+              Oncology focuses on the entire spectrum of cancer care, from initial diagnosis through treatment, survivorship, and palliative care.
             </p>
           </div>
         </div>
