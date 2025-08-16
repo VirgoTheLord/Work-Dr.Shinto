@@ -10,7 +10,7 @@ const About = forwardRef<HTMLDivElement, AboutProps>((props, ref) => {
     <div
       id="about"
       ref={ref}
-      className="min-h-screen w-full flex flex-col justify-center items-center bg-gray-100  text-neutral-800 py-16 sm:py-20 px-6 md:px-10 overflow-hidden"
+      className="min-h-screen w-full flex flex-col justify-center items-center bg-gray-100  text-neutral-800 sm:py-20 px-6 md:px-10 overflow-hidden"
     >
       <div className="max-w-5xl w-full">
         <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
