@@ -28,9 +28,9 @@ export const videos: Video[] = [
   },
   {
     id: "4BMkuiqjhy0",
-    title: "Chemotherapy Without Hair-Fall",
+    title: "Chemotherapy Myths and Facts",
     description:
-      "Discover how chemotherapy is be done without hair-fall and facts and myths about chemotherapy.",
+      "Discover the facts and myths about chemotherapy.",
     bgColor: "bg-[#e0c7ae]",
     textColor: "text-[#401d01]",
     descriptionColor: "text-stone-600",
@@ -39,7 +39,7 @@ export const videos: Video[] = [
     id: "hTcT9nCrRW8",
     title: "Symptoms Of Blood Cancer",
     description:
-      "What are the signs and symptoms of blood cancer, hoe does it affect children.",
+      "What are the signs and symptoms of blood cancer, how does it affect children.",
     bgColor: "bg-[#401d01]",
     textColor: "text-white",
     descriptionColor: "text-stone-300",
