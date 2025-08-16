@@ -157,6 +157,7 @@ const Info = () => {
                   transition-[flex] duration-700 ease-in-out overflow-hidden
                   ${activeIndex === index ? "flex-[4_1_0%]" : "flex-[1_1_0%]"}
                   lg:flex-1
+                  focus:outline-none focus:ring-0
                 `}
               >
                 <Image
