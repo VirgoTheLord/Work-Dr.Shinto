@@ -47,7 +47,7 @@ const About = forwardRef<HTMLDivElement, AboutProps>((props, ref) => {
               .
             </p>
             <p className="text-neutral-600 leading-relaxed font-raleway">
-              A respected <strong>Fellow of AROI and IMA</strong>, Dr. Rajappan
+              A respected <strong>Fellow of AROI and IMA</strong>, Dr. Shinto Rajappan
               is deeply involved in the academic community. He has{" "}
               <strong>co-published research papers</strong> and is a highly
               regarded orator, frequently invited to give lectures at seminars
