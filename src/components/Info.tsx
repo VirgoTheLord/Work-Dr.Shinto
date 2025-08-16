@@ -128,12 +128,12 @@ const Info = () => {
   return (
     <ParallaxSection imgAlt="Radiology in Cancer Care" imgSpeed={0.2} id="info">
       <div className="flex flex-col min-h-screen">
-        <div className="bg-[#e0c7ae]">
+        <div className="bg-[#401d01]">
           <div className="container mx-auto px-6 text-center py-24">
-            <h1 className="text-4xl md:text-6xl font-bold font-braven text-black">
+            <h1 className="text-4xl md:text-6xl font-bold font-braven text-white">
               The Role of Radiology in Cancer Care
             </h1>
-            <p className="mt-4 text-lg text-gray-800 max-w-2xl mx-auto font-raleway">
+            <p className="mt-4 text-lg text-shadow-white max-w-2xl mx-auto font-raleway">
               From early detection to post-treatment follow-up, medical imaging
               is an essential partner in the fight against cancer.
             </p>
@@ -152,7 +152,7 @@ const Info = () => {
                 onClick={() => handleClick(index)}
                 onMouseEnter={() => handleMouseEnter(index)}
                 className={`
-                  card group relative flex flex-col text-left bg-white p-10 cursor-pointer
+                  card group relative flex flex-col text-left bg-[#e0c7ae] p-10 cursor-pointer
                   border-b last:border-b-0 lg:border-b-0 lg:border-r lg:last:border-r-0 border-gray-200
                   transition-[flex] duration-700 ease-in-out overflow-hidden
                   ${activeIndex === index ? "flex-[4_1_0%]" : "flex-[1_1_0%]"}
@@ -173,7 +173,7 @@ const Info = () => {
 
                 <div className="relative z-10 flex flex-col h-full">
                   <div>
-                    <div className="card-number text-7xl lg:text-9xl font-light text-gray-800/20 py-4 font-braven">
+                    <div className="card-number text-7xl lg:text-9xl font-light text-[#401d01] py-4 font-braven">
                       {String(index + 1).padStart(2, "0")}
                     </div>
                     <h3 className="card-title mt-4 text-4xl font-bold tracking-tight text-gray-800 py-4 font-braven">
