@@ -4,6 +4,7 @@ import React, { useState, useRef, useLayoutEffect } from "react";
 import Image from "next/image";
 import { gsap } from "gsap";
 import ParallaxSection from "./ParallaxSection";
+import AnimatedArrow from "./AnimatedArrow"; // Import the new component
 
 const cardData = [
   {
@@ -100,7 +101,6 @@ const Info = () => {
           </div>
         </div>
 
-        {/* MODIFICATION: This wrapper sets the full screen height on desktop */}
         <div className="relative w-full lg:h-screen">
           <div
             ref={containerRef}
@@ -108,7 +108,6 @@ const Info = () => {
             onMouseLeave={() => setHoveredIndex(null)}
           >
             {cardData.map((card, index) => (
-              // MODIFICATION: Set to 1/4 width on desktop, and removed fixed height to allow stretching
               <div
                 key={card.title}
                 onMouseEnter={() => setHoveredIndex(index)}
@@ -136,6 +135,8 @@ const Info = () => {
                     {card.content}
                   </p>
                 </div>
+                {/* Add the animated arrow, visible when the card is not hovered */}
+                <AnimatedArrow isVisible={hoveredIndex !== index} />
               </div>
             ))}
           </div>

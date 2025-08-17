@@ -119,7 +119,8 @@ const Footer = () => {
       ref={footerRef}
       className="relative h-full w-full bg-[#401d01] text-[#F8F5F2] flex items-center justify-center py-24 md:py-16 px-8 overflow-hidden"
     >
-      <div className="w-full max-w-7xl flex flex-col md:flex-row items-center justify-between gap-8">
+      {/* MODIFICATION: Added lg:mb-12 to create space above the copyright notice on large screens */}
+      <div className="w-full max-w-7xl flex flex-col md:flex-row items-center justify-between gap-8 lg:mb-12">
         <div className="text-center md:text-left">
           <h2 className="footer-title font-braven text-5xl md:text-8xl">
             Dr. Shinto Rajappan.

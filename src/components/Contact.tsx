@@ -114,10 +114,13 @@ const Contact: FC = () => {
                 <p className="font-raleway text-sm text-[#401d01]/70 mt-1">
                   Mon - Sat, 5 PM - 9 PM <br /> Sun, 10:30 AM - 8 PM
                 </p>
+
                 <AnimatedContactLink href="tel:+919778463227">
                   +91 97784 63227
                 </AnimatedContactLink>
-                <div>(Whatsapp or call)</div>
+                <div className="ml-1.5 text-sm font-extralight text-[#401d01]/70">
+                  (Whatsapp or call)
+                </div>
               </li>
               <li>
                 <strong className="font-bold font-raleway text-sm text-[#401d01]">
@@ -126,9 +129,14 @@ const Contact: FC = () => {
                 <p className="font-raleway text-sm text-[#401d01]/70 mt-1">
                   Near Lisie Hospital, 36/121, Ernakulam North, Kerala, 682018
                 </p>
+
                 <AnimatedContactLink href="tel:+919895136837">
                   +91 9895136837
                 </AnimatedContactLink>
+                <p className="font-raleway text-sm text-[#401d01] font-bold mt-1">
+                  For Booking, Call:
+                </p>
+
                 <p className="font-raleway text-sm text-[#401d01]/70 mt-1">
                   Mon - Fri, 9 AM - 1:30 PM
                 </p>
