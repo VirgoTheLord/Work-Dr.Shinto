@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FC, memo } from "react";
+import React, { FC } from "react";
 import Image from "next/image";
 import { Video } from "./data";
 
@@ -54,4 +54,4 @@ const VideoCard: FC<VideoCardProps> = ({ video, onSelect }) => {
   );
 };
 
-export default memo(VideoCard);
+export default VideoCard;
