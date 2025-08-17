@@ -14,7 +14,7 @@ const About = forwardRef<HTMLDivElement, AboutProps>((props, ref) => {
     >
       <div className="max-w-5xl w-full">
         <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
-          <div className="w-full md:w-2/5 flex-shrink-0">
+          <div className="w-full max-w-sm mx-auto md:max-w-none md:mx-0 md:w-2/5 flex-shrink-0">
             <div className="relative">
               <div className="absolute -bottom-3 -right-3 w-full h-full bg-orange-950 rounded-lg transform translate-x-2 translate-y-2"></div>
               <div className="relative aspect-[7/9] rounded-lg overflow-hidden shadow-lg z-10">

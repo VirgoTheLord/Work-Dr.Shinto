@@ -129,14 +129,12 @@ const Contact: FC = () => {
                 <p className="font-raleway text-sm text-[#401d01]/70 mt-1">
                   Near Lisie Hospital, 36/121, Ernakulam North, Kerala, 682018
                 </p>
-
-                <AnimatedContactLink href="tel:+919895136837">
-                  +91 9895136837
-                </AnimatedContactLink>
                 <p className="font-raleway text-sm text-[#401d01] font-bold mt-1">
                   For Booking, Call:
                 </p>
-
+                <AnimatedContactLink href="tel:+919895136837">
+                  +91 9895136837
+                </AnimatedContactLink>
                 <p className="font-raleway text-sm text-[#401d01]/70 mt-1">
                   Mon - Fri, 9 AM - 1:30 PM
                 </p>
