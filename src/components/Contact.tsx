@@ -3,7 +3,7 @@
 import React, { useLayoutEffect, useRef, FC } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { SplitText } from "gsap/SplitText"; // requires gsap-trial or splittext plugin
+import { SplitText } from "gsap/SplitText";
 import AnimatedContactLink from "./AnimatedContactLink";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
@@ -91,9 +91,10 @@ const Contact: FC = () => {
             <p className="text-sm uppercase tracking-widest text-[#401d01]/60 font-raleway">
               Contact
             </p>
+            {/* THIS IS THE MODIFIED LINE */}
             <h1
               ref={titleRef}
-              className="text-5xl md:text-7xl lg:text-8xl font-black font-braven leading-tight mt-2 whitespace-normal"
+              className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black font-braven leading-tight mt-2 whitespace-nowrap"
             >
               Dr. Shinto
             </h1>
