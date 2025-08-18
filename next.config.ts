@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: "export",
   images: {
+    unoptimized: true, //disable image optimization for static export
     remotePatterns: [
       {
         protocol: "https",
@@ -14,3 +16,4 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+
